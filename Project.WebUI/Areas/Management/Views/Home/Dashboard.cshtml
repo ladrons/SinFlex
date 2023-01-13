@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Dashboard</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="button-main">
+        <div class="button"><button type="button" class="btn btn-secondary">MOVIES</button></div>
+        <div class="button"><button type="button" class="btn btn-secondary">APPUSERS</button></div>
+        <div class="button"><button type="button" class="btn btn-secondary">SALOONS</button></div>
+        <div class="button"><button type="button" class="btn btn-secondary">Null</button></div>
+        <div class="button"><button type="button" class="btn btn-secondary">Null</button></div>
+    </div>
+    <div style="text-align:center">@ViewBag.Name</div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/js/site.js"></script>
+</body>
+</html>
+
+<style>
+    .button-main{
+        
+        display: flex;
+        margin: 10px 10px 10px 10px;
+        justify-content: center;
+    }
+    .button{
+        padding-right: 10px;
+        
+    }
+</style>

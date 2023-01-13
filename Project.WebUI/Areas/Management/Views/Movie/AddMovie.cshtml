@@ -1,0 +1,81 @@
+﻿@model MovieVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddMovie</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div style="margin: 10px"><h1 style="text-align:center">Film Ekleme Sayfası</h1></div>
+    <hr />
+    <div class="box-1">
+        <form asp-action="AddMovie" method="post" style="margin: 20px">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label class="form-label">Film Başlığı/Adı</label>
+                <input type="text" class="form-control" asp-for="MovieDTO.Title" placeholder="Film Adı">
+                <span asp-validation-for="MovieDTO.Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Filmin Konusu</label>
+                <textarea class="form-control" asp-for="MovieDTO.Content" rows="3" cols="50" placeholder="Filmin Konusu"></textarea>
+                <span asp-validation-for="MovieDTO.Content" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                @{
+                    foreach (var item in Model.Genres)
+                    {
+                        <label>@item.Name:</label>
+                        <input type="radio" asp-for="MovieDTO.Genre" value="@item.Name"/>
+                        <span>|</span>
+                    }
+                    <span asp-validation-for="MovieDTO.Genre" class="text-danger"></span>
+                }
+            </div>
+            <div class="mb-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label class="form-label">Süre</label>
+                <input type="text" class="form-control" asp-for="MovieDTO.Duration" placeholder="Süre">
+                <span asp-validation-for="MovieDTO.Duration" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label class="form-label">Yayın Tarihi</label>
+                <input type="date" class="form-control" asp-for="MovieDTO.ReleaseDate">
+                <span asp-validation-for="MovieDTO.ReleaseDate" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Film Kaydet</button>
+        </form>
+    </div>
+
+    <!--SCRIPTS-->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/js/site.js"></script>
+    <!--SCRIPTS-->
+</body>
+</html>
+
+<style>
+    .box-1 {
+        width: 800px;
+        height: 800px;
+    }
+</style>

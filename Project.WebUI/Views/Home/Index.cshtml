@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@if (ViewBag.Name != null)
+{
+    <h1>Hoşgeldin: @ViewBag.Name</h1>
+}else
+{
+    <form asp-action="GirisYap" method="post">
+
+        <input type="text" name="Name" class="form-control mb-2" />
+        <button class="btn btn-success" type="submit">Giriş Yap</button>
+
+    </form>
+}
