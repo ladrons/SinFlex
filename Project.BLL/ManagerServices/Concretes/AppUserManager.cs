@@ -19,11 +19,6 @@ namespace Project.BLL.ManagerServices.Concretes
             _appRep = appRep;
         }
 
-        public Task<AppUser> FindUserAsync(AppUser appUser)
-        {
-            return _appRep.FindUserAsync(appUser);
-        }
-
         public Task<AppUser> GetFoundUser(AppUserDTO appUserDTO)
         {
             return _appRep.GetFoundUser(appUserDTO);

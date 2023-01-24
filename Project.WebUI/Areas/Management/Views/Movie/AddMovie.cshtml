@@ -18,6 +18,8 @@
 </head>
 <body>
     <div style="margin: 10px"><h1 style="text-align:center">Film Ekleme Sayfası</h1></div>
+    <div style="text-align:center"><h3>@TempData["SameMovieAlert"]</h3></div>
+
     <hr />
     <div class="box-1">
         <form asp-action="AddMovie" method="post" style="margin: 20px">
@@ -40,7 +42,7 @@
                     foreach (var item in Model.Genres)
                     {
                         <label>@item.Name:</label>
-                        <input type="radio" asp-for="MovieDTO.Genre" value="@item.Name"/>
+                        <input type="radio" asp-for="MovieDTO.Genre" value="@item.Name" />
                         <span>|</span>
                     }
                     <span asp-validation-for="MovieDTO.Genre" class="text-danger"></span>

@@ -9,5 +9,9 @@ namespace Project.ENTITIES.Models
     public class Genre : BaseEntity
     {
         public string? Name { get; set; } //Tür adı
+
+        //Relational Properties
+
+        public virtual ICollection<Movie> Movies { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Project.ENTITIES.Models;
+﻿using Project.DTO.Internal;
+using Project.ENTITIES.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Project.DAL.Repositories.Abstracts
 {
     public interface IMovieRepository : IRepository<Movie>
     {
-
+        Task<bool> CheckSameMovie(MovieDTO movieDTO);
     }
 }

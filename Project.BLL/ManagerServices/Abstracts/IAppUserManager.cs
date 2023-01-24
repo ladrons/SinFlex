@@ -10,8 +10,6 @@ namespace Project.BLL.ManagerServices.Abstracts
 {
     public interface IAppUserManager : IManager<AppUser>
     {
-        Task<AppUser> FindUserAsync(AppUser appUser);
-
         Task<AppUser> GetFoundUser(AppUserDTO appUserDTO);
     }
 }

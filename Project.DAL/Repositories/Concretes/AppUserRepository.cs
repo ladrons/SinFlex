@@ -20,7 +20,6 @@ namespace Project.DAL.Repositories.Concretes
         {
             _db = db;
         }
-
         /// <summary>
         /// Kendisine gelen DTO değerini DB'de sorgular ve denk geldiği 'AppUser' nesnesini döndürür.
         /// </summary>
@@ -39,7 +38,7 @@ namespace Project.DAL.Repositories.Concretes
             return foundUser;
         }
 
-        public async Task<AppUser> FindUserAsync(AppUser appUser)
+        public Task<AppUser> FindUserAsync(AppUser appUser)
         {
             //if (appUser == null) //ToDo: Bu kontrolü Validation eklediğim de kaldıracağım. (appUser == null)
             //    throw new ArgumentNullException(nameof(appUser));

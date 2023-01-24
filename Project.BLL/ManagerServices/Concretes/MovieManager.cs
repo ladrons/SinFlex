@@ -1,5 +1,6 @@
 ﻿using Project.BLL.ManagerServices.Abstracts;
 using Project.DAL.Repositories.Abstracts;
+using Project.DTO.Internal;
 using Project.ENTITIES.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace Project.BLL.ManagerServices.Concretes
         public MovieManager(IMovieRepository movieRep) : base(movieRep)
         {
             _movieRep = movieRep;
+        }
+
+        public Task<bool> CheckSameMovie(MovieDTO movieDTO)
+        {
+            return _movieRep.CheckSameMovie(movieDTO);
         }
     }
 }
