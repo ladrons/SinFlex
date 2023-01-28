@@ -28,13 +28,13 @@ namespace Project.WebUI.Areas.Management.Controllers
             if (!ModelState.IsValid) return View();
 
             HttpContext.Session.SetObject("user", await _appUserMan.GetFoundUser(appUserDTO));
-            return RedirectToAction("Dashboard");
+            return RedirectToAction("ListMovies", "Movie", new {area = "Management"});
 
-            //return RedirectToAction("Index", "Home", new {area = ""});
+            //return RedirectToAction("Dashboard");
         }
         #endregion
 
-        //-------------------------------------//-------------------------------------
+        //-------------------------------------//
 
         #region Dashboard GET/POST
         public IActionResult Dashboard()
@@ -45,5 +45,9 @@ namespace Project.WebUI.Areas.Management.Controllers
             return View();
         }
         #endregion
+
+        //-------------------------------------//
+
+        //Genre ekleme işini ya buraya ya da Dashboard içine yapabilirim.
     }
 }

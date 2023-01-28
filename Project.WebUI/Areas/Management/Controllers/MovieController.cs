@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.BLL.ManagerServices.Abstracts;
+using Project.COMMON.Tools;
 using Project.DTO.Internal;
 using Project.ENTITIES.Models;
 using Project.WebUI.Areas.Management.VMClasses;
@@ -10,6 +11,7 @@ namespace Project.WebUI.Areas.Management.Controllers
     public class MovieController : Controller
     {
         IGenreManager _genreMan; IMovieManager _movieMan;
+
         public MovieController(IGenreManager genreMan, IMovieManager movieMan)
         {
             _genreMan = genreMan;
@@ -20,7 +22,12 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         public IActionResult ListMovies()
         {
-            return View();
+            MovieVM mvm = new MovieVM
+            {
+                Movies = _movieMan.GetActives(),
+            };
+            //ViewBag.UserInfo = (HttpContext.Session.GetObject<AppUser>("user").Username);
+            return View(mvm);
         }
 
         //-------------------------------------//
@@ -35,10 +42,8 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddMovieAsync(MovieDTO movieDTO)
         {
-            //Eğer bu kısım da 'RedirectToAction' kullanıp AddMovie GET kısmına geri yönlendirirsem UI da validation uyarıları çıkmıyor. Bu kısmı kontrol edip daha farklı şekilde yapılabilir mi diye bakacağım.
             if (!ModelState.IsValid) 
             { 
                 MovieVM mvm = new MovieVM
@@ -48,24 +53,14 @@ namespace Project.WebUI.Areas.Management.Controllers
                 return View(mvm);
             } //Eğer validation da hata olmadıysa işlemler aşağıdan devam edecek;
 
-            if (await _movieMan.CheckSameMovie(movieDTO) == true)
+            if (await _movieMan.CheckSameMovie(movieDTO))
             {
                 Genre findGenre = await _genreMan.FirstOrDefault(x => x.Name == movieDTO.Genre);
-                    //findGenre nesnesinin null gelme durumu söz konusu olmadığı için kontrol yapılmamıştır.
-                
-                Movie saveMovie = new Movie
-                {
-                    Title = movieDTO.Title,
-                    Content = movieDTO.Content,
-                    Genre = findGenre,
-                    Duration = movieDTO.Duration,
-                    ReleaseDate = movieDTO.ReleaseDate
-                };
-                
-                await _movieMan.AddAsync(saveMovie); 
+
+                await _movieMan.AddAsync(_movieMan.ConvertFromDTO(movieDTO, findGenre));
                 await _movieMan.SaveAsync();
 
-                TempData["ProcessCompleted"] = "Kayıt işlemi gerçekleştirildi."; //ToDo: Kayıt Tamamlandı mesajı düzenlenecek.
+                TempData["ProcessCompleted"] = "Kayıt işlemi başarılı bir şekilde gerçekleştirildi.";
                 return RedirectToAction("ListMovies");
             }
             TempData["SameMovieAlert"] = String.Format("Veritabanında {0} isimli bir film bulunmaktadır.", movieDTO.Title);
@@ -74,9 +69,63 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         //-------------------------------------//
 
-        public IActionResult UpdateMovie()
+        public async Task<IActionResult> UpdateMovie(int id)
         {
-            return View();
+            Movie foundMovie = await _movieMan.Find(id);
+
+            MovieVM mvm = new MovieVM
+            {
+                MovieDTO = _movieMan.ConvertToDTO(foundMovie),
+                Genres = _genreMan.GetActives()
+            };
+            return View(mvm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMovieAsync(MovieDTO movieDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                MovieVM mvm = new MovieVM
+                {
+                    MovieDTO = movieDTO,
+                    Genres = _genreMan.GetActives()
+                };
+                return View(mvm);
+            }
+            Movie updateMovie = await _movieMan.Find(Convert.ToInt32(movieDTO.ID)); //ToDo: ID gelmez ise ne olur? Test edilecek.
+
+            updateMovie.Title = movieDTO.Title; 
+            updateMovie.Content = movieDTO.Content; 
+            updateMovie.Duration = movieDTO.Duration; 
+            updateMovie.ReleaseDate = movieDTO.ReleaseDate;
+
+            Genre findGenre = await _genreMan.FirstOrDefault(x => x.Name == movieDTO.Genre);
+
+            updateMovie.Genre = findGenre;
+
+            _movieMan.Update(updateMovie);
+            await _movieMan.SaveAsync();
+
+            TempData["ProcessCompleted"] = "Güncelleme işlemi başarılı bir şekilde gerçekleştirildi.";
+            return RedirectToAction("ListMovies");
+        }
+
+        //-------------------------------------//
+
+        public async Task<IActionResult> DeleteMovie(int id)
+        {
+            Movie foundMovie = await _movieMan.Find(id);
+
+            AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
+
+            foundMovie.ReasonForDelete = ""; //ToDo: Silme nedeni bilgisini kullanıcıdan almak için bir UI yapmak lazım.
+            foundMovie.WhoDeleted = sessionUser.Username;
+
+            _movieMan.Delete(foundMovie);
+            await _movieMan.SaveAsync();
+
+            return RedirectToAction("ListMovies");
         }
     }
 }

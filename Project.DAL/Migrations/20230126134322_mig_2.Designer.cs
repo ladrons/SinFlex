@@ -12,7 +12,7 @@ using Project.DAL.Context;
 namespace Project.DAL.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20230113141808_mig_2")]
+    [Migration("20230126134322_mig_2")]
     partial class mig2
     {
         /// <inheritdoc />
@@ -205,11 +205,14 @@ namespace Project.DAL.Migrations
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GenreID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ReasonForDelete")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
@@ -220,7 +223,12 @@ namespace Project.DAL.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("WhoDeleted")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("GenreID");
 
                     b.ToTable("Movies");
                 });
@@ -267,10 +275,26 @@ namespace Project.DAL.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Project.ENTITIES.Models.Movie", b =>
+                {
+                    b.HasOne("Project.ENTITIES.Models.Genre", "Genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("GenreID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+                });
+
             modelBuilder.Entity("Project.ENTITIES.Models.Customer", b =>
                 {
                     b.Navigation("CustomerProfile")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Genre", b =>
+                {
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

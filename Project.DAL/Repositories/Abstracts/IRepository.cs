@@ -46,6 +46,5 @@ namespace Project.DAL.Repositories.Abstracts
 
         //Save
         Task SaveAsync();
-        void Save();
     }
 }

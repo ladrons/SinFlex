@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Project.DAL.Context;
 using Project.DAL.Repositories.Abstracts;
 using Project.ENTITIES.Interfaces;
@@ -21,13 +22,11 @@ namespace Project.DAL.Repositories.Concretes
         }
         public DbSet<T> Table => _db.Set<T>();
 
+        ////////////////////////////////////////////////////////////////////////
+
         public async Task SaveAsync()
         {
             await _db.SaveChangesAsync();
-        }
-        public void Save()
-        {
-            _db.SaveChanges();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -145,7 +144,5 @@ namespace Project.DAL.Repositories.Concretes
         {
             return await Table.FirstOrDefaultAsync(data => data.ID == id);
         }
-
-
     }
 }

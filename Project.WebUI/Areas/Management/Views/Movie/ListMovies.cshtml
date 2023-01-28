@@ -1,19 +1,50 @@
-﻿
+﻿@model MovieVM
 @{
-    Layout = null;
+    ViewData["Title"] = "ListMovies";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
-
-<html>
+<html lang="tr">
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>ListMovies</title>
 </head>
+
 <body>
-    <h1>ListMovies</h1>
-    <div>
-        <b>@TempData["ProcessCompleted"]</b>
+    <div style="text-align:center"><h3>@TempData["ProcessCompleted"]</h3></div>
+    <div style="text-align:center"><h5>@ViewBag.UserInfo</h5></div>
+
+    <div style="margin: 10px">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Release Date</th>
+                    <th colspan="2">Process</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Movies)
+                {
+                    <tr>
+                        <th scope="row">@item.ID</th>
+                        <td>@item.Title</td>
+                        <td>@item.Genre.Name</td>
+                        <td>@item.Content</td>
+                        <td>@item.Duration Dakika</td>
+                        <td>@item.ReleaseDate.ToLongDateString()</td>
+                        <td><a asp-controller="Movie" asp-action="UpdateMovie" asp-route-id="@item.ID" class="btn btn-primary">Update</a></td>
+                        <td><a asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
+

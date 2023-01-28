@@ -23,7 +23,6 @@
   <ItemGroup>
     <Folder Include="Areas\Management\Data\" />
     <Folder Include="Areas\Management\Models\" />
-    <Folder Include="Areas\Management\Views\Shared\" />
   </ItemGroup>
 
 </Project>
