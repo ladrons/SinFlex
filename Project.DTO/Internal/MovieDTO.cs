@@ -10,6 +10,8 @@ namespace Project.DTO.Internal
 {
     public class MovieDTO
     {
+        public string? ID { get; set; }
+
         [Display(Name = "Film Adı")]
         [Required(ErrorMessage = "{0} boş bırakılamaz!")]
         [MinLength(2, ErrorMessage = "{0} Minimum {1} karakter olmalıdır.")]

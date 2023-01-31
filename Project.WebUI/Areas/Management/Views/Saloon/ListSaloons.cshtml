@@ -1,0 +1,44 @@
+﻿@model SaloonVM
+@{
+    ViewData["Title"] = "ListSaloons";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListSaloons</title>
+</head>
+
+<body>
+    <div style="text-align:center"><h3>@TempData["ProcessCompleted"]</h3></div>
+    <div style="text-align:center"><h5>@ViewBag.UserInfo</h5></div>
+
+    <div class="container-md">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Capacity</th>
+                    <th colspan="2">Process</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Saloons)
+                {
+                    <tr>
+                        <th scope="row">@item.ID</th>
+                        <td>@item.Name</td>
+                        <td>@item.Capacity</td>
+                        <td><a asp-controller="Saloon" asp-action="UpdateSaloon" asp-route-id="@item.ID" class="btn btn-primary">Update</a></td>
+                        <td><a asp-controller="Saloon" asp-action="DeleteSaloon" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

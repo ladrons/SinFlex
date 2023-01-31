@@ -8,13 +8,10 @@ using System.Threading.Tasks;
 
 namespace Project.BLL.ManagerServices.Abstracts
 {
-    public interface IMovieManager : IManager<Movie>
+    public interface ISaloonManager : IManager<Saloon>
     {
-        Movie ConvertFromDTO(MovieDTO movieDTO, Genre genre);
-        MovieDTO ConvertToDTO(Movie movie);
+        Saloon ConvertFromDTO(SaloonDTO saloonDTO);
+        SaloonDTO ConvertToDTO(Saloon saloon);
 
-
-
-        Task<bool> CheckSameMovie(MovieDTO movieDTO);
     }
 }

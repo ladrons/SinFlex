@@ -63,7 +63,7 @@ namespace Project.WebUI.Areas.Management.Controllers
                 TempData["ProcessCompleted"] = "Kayıt işlemi başarılı bir şekilde gerçekleştirildi.";
                 return RedirectToAction("ListMovies");
             }
-            TempData["SameMovieAlert"] = String.Format("Veritabanında {0} isimli bir film bulunmaktadır.", movieDTO.Title);
+            TempData["SameMovieAlert"] = String.Format("Veritabanında '{0}' isimli bir film bulunmaktadır.", movieDTO.Title);
             return RedirectToAction("AddMovie");
         }
 

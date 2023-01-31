@@ -46,6 +46,5 @@ namespace Project.BLL.ManagerServices.Abstracts
 
         //Save
         Task SaveAsync();
-        void Save();
     }
 }

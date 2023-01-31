@@ -1,0 +1,47 @@
+﻿@model SaloonVM
+@{
+    ViewData["Title"] = "UpdateSaloon";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UpdateSaloon</title>
+</head>
+<body>
+    <div style="margin: 10px"><h1 style="text-align:center">Salon Güncelleme Sayfası</h1></div>
+    <div style="text-align:center"><h3>@TempData["DÜZELTİLECEK"]</h3></div>
+
+    <hr />
+    <div class="box-1">
+        <form asp-action="UpdateSaloon" method="post" style="margin: 20px">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="SaloonDTO.ID" />
+
+            <div class="mb-3">
+                <label class="form-label">Salon Adı</label>
+                <input type="text" class="form-control" asp-for="SaloonDTO.Name" placeholder="Salon Adı">
+                <span asp-validation-for="SaloonDTO.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Salon Kapasitesi</label>
+                <input type="text" class="form-control" asp-for="SaloonDTO.Capacity" placeholder="Koltuk Kapasitesi">
+                <span asp-validation-for="SaloonDTO.Capacity" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Salonu Güncelle</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<style>
+    .box-1 {
+        width: 800px;
+        height: auto;
+    }
+</style>

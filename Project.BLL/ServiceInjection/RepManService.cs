@@ -22,12 +22,14 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<ISaloonRepository, SaloonRepository>();
 
             //Manager
             services.AddScoped(typeof(IManager<>), typeof(BaseManager<>));
             services.AddScoped<IAppUserManager, AppUserManager>();
             services.AddScoped<IMovieManager, MovieManager>();
             services.AddScoped<IGenreManager, GenreManager>();
+            services.AddScoped<ISaloonManager, SaloonManager>();
 
             return services;
         }

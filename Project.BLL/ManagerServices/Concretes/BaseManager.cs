@@ -23,12 +23,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             await _iRep.SaveAsync();
         }
-        public void Save()
-        {
-            _iRep.Save();
-        }
 
         ////////////////////////////////////////////////////////////////////////
+        
         public async Task AddAsync(T item)
         {
             await _iRep.AddAsync(item);
@@ -37,7 +34,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             _iRep.AddRangeAsync(list);
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public void Update(T item)
         {
             _iRep.Update(item);
@@ -46,7 +45,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             _iRep.UpdateRange(list);
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public void Delete(T item)
         {
             _iRep.Delete(item);
@@ -55,7 +56,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             _iRep.DeleteRange(list);
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public void Destroy(T item)
         {
             _iRep.Destroy(item);
@@ -64,7 +67,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             _iRep.DestroyRange(list);
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public IQueryable<T> GetAll()
         {
             return _iRep.GetAll();
@@ -81,7 +86,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             return _iRep.GetPassives();
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public async Task<T> GetFirstData()
         {
             return await _iRep.GetFirstData();
@@ -90,7 +97,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             return await _iRep.GetLastData();
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public IQueryable<T> Where(Expression<Func<T, bool>> exp)
         {
             return _iRep.Where(exp);
@@ -111,7 +120,9 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             return _iRep.SelectViaClass(exp);
         }
+
         ////////////////////////////////////////////////////////////////////////
+        
         public async Task<T> Find(int id)
         {
             return await _iRep.Find(id);
