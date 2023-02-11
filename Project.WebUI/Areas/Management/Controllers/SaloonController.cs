@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.BLL.ManagerServices.Abstracts;
 using Project.COMMON.Tools;
 using Project.DTO.Internal;
@@ -10,19 +11,36 @@ namespace Project.WebUI.Areas.Management.Controllers
     [Area("Management")]
     public class SaloonController : Controller
     {
-        ISaloonManager _saloonMan;
+        ISaloonManager _saloonMan; IMovieManager _movieMan;
 
-        public SaloonController(ISaloonManager saloonMan)
+        public SaloonController(ISaloonManager saloonMan, IMovieManager movieMan)
         {
             _saloonMan = saloonMan;
+            _movieMan = movieMan;
         }
 
         public IActionResult ListSaloons()
         {
             SaloonVM svm = new SaloonVM
             {
-                Saloons = _saloonMan.GetActives()
+                Saloons = _saloonMan.GetAll()
             };
+            return View(svm);
+        }
+
+        //-------------------------------------//
+
+        public async Task<IActionResult> SaloonDetail(int id)
+        {
+            Saloon foundSaloon = await _saloonMan.Find(id);
+
+            SaloonVM svm = new SaloonVM();
+            svm.Saloon = foundSaloon;
+
+            if (foundSaloon.Movie != null)
+            {
+                svm.Movie = foundSaloon.Movie;
+            }
             return View(svm);
         }
 
@@ -34,7 +52,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSaloonAsync(SaloonDTO saloonDTO)
+        public async Task<IActionResult> AddSaloon(SaloonDTO saloonDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -68,7 +86,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSaloonAsync(SaloonDTO saloonDTO)
+        public async Task<IActionResult> UpdateSaloon(SaloonDTO saloonDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +125,76 @@ namespace Project.WebUI.Areas.Management.Controllers
             _saloonMan.Delete(foundSaloon);
             await _saloonMan.SaveAsync();
 
-            return RedirectToAction("ListSaloons"); //ToDo: silme işlemi test edilecek. (DB'de admin tanımlı değil tanımla öyle test et)
+            TempData["ProcessCompleted"] = "Silme işlemi başarılı bir şekilde gerçekleştirildi.";
+            return RedirectToAction("ListSaloons");
+        }
+
+        //-------------------------------------//
+
+        public async Task<IActionResult> AssignMovieToSaloon(int id)
+        {
+            Saloon foundSaloon = await _saloonMan.Find(id); //Salonu bulduk. //id null gelemez, db'de olmayan bir değer olamaz. O yüzden kontrole gerek yok.
+            IQueryable allMovies = _movieMan.GetActives(); //Aktif filmleri bulduk. //Pasif filmlerin salona atanması mantıksız olduğu için sadece aktif filmler yeterli.
+
+            SaloonVM svm = new SaloonVM(); //Yeni bi vm nesnesi oluşturduk.
+            svm.MoviesSelectList = new List<SelectListItem>(); //List nesnemizi yarattık.
+
+            svm.Saloon = foundSaloon; //Bulduğumuz salonu vm içerisindeki değişkene attık.
+            foreach (Movie item in allMovies) //Aktif filmlerde döndük ve yarattığımız list'e ekledik.
+            {
+                svm.MoviesSelectList.Add(new SelectListItem { Text = item.Title, Value = item.ID.ToString() });
+            }
+            return View(svm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AssignMovieToSaloon(SaloonVM svm)
+        {
+            Saloon foundSaloon = await _saloonMan.Find(svm.Saloon.ID);
+            foundSaloon.Movie = await _movieMan.Find(svm.Movie.ID);
+
+            _saloonMan.Update(foundSaloon);
+            await _saloonMan.SaveAsync();
+
+            return RedirectToAction("ListSaloons");
+        }
+
+        //-------------------------------------//
+
+        //ToDo: Seçili salona seans ekleme işlemi burada yapılacak.
+
+        //-------------------------------------//
+
+        //TEST TEST TEST TEST//
+
+        public IActionResult MovieAssignment()
+        {
+            #region Commands
+            //Action'ın işlemi: seçili olan salona seçili olan filmi atayacak.
+
+            /*
+                Yaşanabilecek durumlar;
+            1- Seçili olan salona daha önce film atanmış olabilir.
+            2- Sadece aktif veya güncellenmiş salonlar atanabilmeli.
+            3- Sadece aktif ve güncellenmiş filmler atanabilmeli.
+            4- Hatalı atama yapılamamalı.
+            5-
+            */
+
+            //İşlem yapabilmem için aktif olan filmler ve salonları görebilmeliyiz. 
+            #endregion
+            return Ok();
+        }
+        public async Task<JsonResult> SaloonListAsync()
+        {
+            Saloon saloon = await _saloonMan.GetFirstData();
+            SaloonDTO dto = new SaloonDTO();
+
+            dto.ID = saloon.ID.ToString();
+            dto.Name = saloon.Name;
+            dto.Capacity = saloon.Capacity;
+
+            return Json(dto);
         }
     }
 }

@@ -1,0 +1,103 @@
+﻿@model SaloonVM
+@{
+    ViewData["Title"] = "SaloonDetail";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SaloonDetail</title>
+</head>
+
+<body>
+
+    <div style="text-align:center">
+        <h2>@Model.Saloon.Name Detay Sayfası</h2>
+        <label>Bu sayfa üzerinden seçili salon hakkında daha fazla bilgi elde edebilirsiniz.</label>
+    </div>
+
+    <hr />
+
+    <div class="container">
+        <div style="text-align:center">
+            @if (Model.Movie != null)
+            {
+                <strong>'@Model.Saloon.Name' isimli salonda @Model.Saloon.Movie.Title isimli film gösterimdedir. </strong>
+            }
+        </div>
+
+        <form asp-action="SaloonDetail" method="post" style="margin: 20px">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Seçili Salon ID</label>
+                        <input type="text" class="form-control" asp-for="Saloon.ID" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Seçili Salon Adı</label>
+                        <input type="text" class="form-control" asp-for="Saloon.Name" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Seçili Salon Kapasitesi</label>
+                        <input type="text" class="form-control" asp-for="Saloon.Capacity" disabled>
+                    </div>
+                    <div class="mb-3">
+                        @if (Model.Saloon.Status == Project.ENTITIES.Enums.DataStatus.Deleted)
+                        {
+                            <a asp-controller="Saloon" asp-action="DeleteSaloon" asp-route-id="@Model.Saloon.ID" class="btn btn-success">Salonu Aç</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Saloon" asp-action="DeleteSaloon" asp-route-id="@Model.Saloon.ID" class="btn btn-danger">Salonu Kapat</a>
+                        }
+                        <a asp-controller="Saloon" asp-action="UpdateSaloon" asp-route-id="@Model.Saloon.ID" class="btn btn-primary">Salonu Güncelle</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3" style="text-align:center">
+                        <h4>Gösterimde olan film bilgisi</h4>
+                        @if (Model.Saloon.Movie != null)
+                        {
+                            <div class="mb-1">
+                                <b class="form-label">Film Adı:</b>
+                                <label class="form-label">@Model.Saloon.Movie.Title</label>
+                            </div>
+                            <div class="mb-1">
+                                <b class="form-label">Vizyon Tarihi:</b>
+                                <label class="form-label">@Model.Saloon.Movie.ReleaseDate.ToLongDateString()</label>
+                            </div>
+                            <div class="mb-1">
+                                <b class="form-label">Süre:</b>
+                                <label class="form-label">@Model.Saloon.Movie.Duration Dakika</label>
+                            </div>
+                            <label>Film atamak için
+                                <a asp-controller="Saloon" asp-action="AssignMovieToSaloon" asp-route-id="@Model.Saloon.ID">tıklayın</a>
+                            </label>
+                        }
+                        else
+                        {
+                            <div class="mb-1">
+                                <b class="form-label">Bu salonda gösterilen film bulunmamaktadır.</b>
+                            </div>
+                            <label>
+                                Film atamak için
+                                <a asp-controller="Saloon" asp-action="AssignMovieToSaloon" asp-route-id="@Model.Saloon.ID">tıklayın</a>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <div style="text-align:center">
+                        <h4>TABLO KALDIRILDI.</h4>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+</body>
+</html>

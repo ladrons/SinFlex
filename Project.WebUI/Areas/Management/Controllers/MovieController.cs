@@ -42,7 +42,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddMovieAsync(MovieDTO movieDTO)
+        public async Task<IActionResult> AddMovie(MovieDTO movieDTO)
         {
             if (!ModelState.IsValid) 
             { 
@@ -82,7 +82,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateMovieAsync(MovieDTO movieDTO)
+        public async Task<IActionResult> UpdateMovie(MovieDTO movieDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -127,5 +127,7 @@ namespace Project.WebUI.Areas.Management.Controllers
 
             return RedirectToAction("ListMovies");
         }
+
+        //-------------------------------------//
     }
 }

@@ -22,8 +22,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAsync(AppUserDTO appUserDTO)
+        public async Task<IActionResult> Login(AppUserDTO appUserDTO)
         {
             if (!ModelState.IsValid) return View();
 
@@ -36,7 +35,6 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         //-------------------------------------//
 
-        #region Dashboard GET/POST
         public IActionResult Dashboard()
         {
             AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
@@ -44,10 +42,11 @@ namespace Project.WebUI.Areas.Management.Controllers
 
             return View();
         }
-        #endregion
 
         //-------------------------------------//
 
         //Genre ekleme işini ya buraya ya da Dashboard içine yapabilirim.
+
+        //-------------------------------------//
     }
 }
