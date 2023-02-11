@@ -73,13 +73,13 @@ namespace Project.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Saloons",
+                name: "Seances",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SaloonName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Time = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -87,7 +87,7 @@ namespace Project.DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Saloons", x => x.ID);
+                    table.PrimaryKey("PK_Seances", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,9 +128,9 @@ namespace Project.DAL.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Duration = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReasonForDelete = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WhoDeleted = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GenreID = table.Column<int>(type: "int", nullable: false),
+                    ReasonForDelete = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhoDeleted = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -147,10 +147,41 @@ namespace Project.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Saloons",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Capacity = table.Column<int>(type: "int", nullable: false),
+                    MovieID = table.Column<int>(type: "int", nullable: true),
+                    ReasonForDelete = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhoDeleted = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Saloons", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Saloons_Movies_MovieID",
+                        column: x => x.MovieID,
+                        principalTable: "Movies",
+                        principalColumn: "ID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_GenreID",
                 table: "Movies",
                 column: "GenreID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Saloons_MovieID",
+                table: "Saloons",
+                column: "MovieID");
         }
 
         /// <inheritdoc />
@@ -163,13 +194,16 @@ namespace Project.DAL.Migrations
                 name: "CustomerProfiles");
 
             migrationBuilder.DropTable(
-                name: "Movies");
-
-            migrationBuilder.DropTable(
                 name: "Saloons");
 
             migrationBuilder.DropTable(
+                name: "Seances");
+
+            migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "Genres");

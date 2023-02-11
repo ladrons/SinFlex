@@ -250,15 +250,57 @@ namespace Project.DAL.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("SaloonName")
+                    b.Property<int?>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonForDelete")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("WhoDeleted")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
+                    b.HasIndex("MovieID");
+
                     b.ToTable("Saloons");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Seance", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Seances");
                 });
 
             modelBuilder.Entity("Project.ENTITIES.Models.CustomerProfile", b =>
@@ -283,6 +325,15 @@ namespace Project.DAL.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("Project.ENTITIES.Models.Saloon", b =>
+                {
+                    b.HasOne("Project.ENTITIES.Models.Movie", "Movie")
+                        .WithMany("Saloons")
+                        .HasForeignKey("MovieID");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("Project.ENTITIES.Models.Customer", b =>
                 {
                     b.Navigation("CustomerProfile")
@@ -292,6 +343,11 @@ namespace Project.DAL.Migrations
             modelBuilder.Entity("Project.ENTITIES.Models.Genre", b =>
                 {
                     b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Movie", b =>
+                {
+                    b.Navigation("Saloons");
                 });
 #pragma warning restore 612, 618
         }
