@@ -17,21 +17,22 @@ namespace Project.DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerProfileConfiguration());
-            modelBuilder.ApplyConfiguration(new AppUserConfiguration());
+            modelBuilder.ApplyConfiguration(new GenreConfiguration());
             modelBuilder.ApplyConfiguration(new MovieConfiguration());
             modelBuilder.ApplyConfiguration(new SaloonConfiguration());
-            modelBuilder.ApplyConfiguration(new GenreConfiguration());
+            modelBuilder.ApplyConfiguration(new SeanceConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
-
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerProfile> CustomerProfiles { get; set; }
-        public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<Genre> Genres { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Saloon> Saloons { get; set; }
-        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Seance> Seances { get; set; }
     }
 }

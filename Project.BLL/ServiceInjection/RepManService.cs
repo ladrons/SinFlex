@@ -23,6 +23,7 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ISaloonRepository, SaloonRepository>();
+            services.AddScoped<ISeanceRepository, SeanceRepository>();
 
             //Manager
             services.AddScoped(typeof(IManager<>), typeof(BaseManager<>));
@@ -30,6 +31,7 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<IMovieManager, MovieManager>();
             services.AddScoped<IGenreManager, GenreManager>();
             services.AddScoped<ISaloonManager, SaloonManager>();
+            services.AddScoped<ISeanceManager, SeanceManager>();
 
             return services;
         }
