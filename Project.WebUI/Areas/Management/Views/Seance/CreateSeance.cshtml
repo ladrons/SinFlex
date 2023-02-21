@@ -1,0 +1,135 @@
+﻿@model SeanceVM
+@{
+    ViewData["Title"] = "CreateSeance";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateSeance</title>
+</head>
+<body>
+    <div style="text-align:center">
+        <h2>Seans Oluşturma Sayfası</h2>
+        <label>
+            DAHA SONRA BİLGİ KISMI EKLENECEK.
+        </label>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form asp-controller="Seance" asp-action="CreateSeance" method="post">
+                    <input type="hidden" asp-for="Saloon.ID" />
+
+                    <h5>Seans Oluşturma Bölümü</h5>
+
+                    <div class="mb-1">
+                        <label class="form-label"><b>Başlangıç Tarihi </b><i>(Filmin vizyon tarihinden önce olamaz)</i></label>
+                        <input type="date" class="form-control" asp-for="SeanceDTO.StartingDate">
+                        @*<span asp-validation-for="SeanceDTO.StartingDate" class="text-danger"></span>*@
+                    </div>
+
+                    <div class="mb-1">
+                        <label class="form-label"><b>Bitiş Tarihi </b></label>
+                        <input type="date" class="form-control" asp-for="SeanceDTO.EndingDate">
+                        @*<span asp-validation-for="SeanceDTO.EndingDate" class="text-danger"></span>*@
+                    </div>
+
+                    <div id="SeanceTimeGroup" class="">
+                        <div id="TimeDiv" class="mb-1">
+                            @*<span asp-validation-for="SeanceDTO.SeanceTimeForTwoD" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type='button' class="btn btn-secondary" value='Add TimeBox' id='addTimeBox'>
+                        <input type='button' class="btn btn-secondary" value='Remove Timebox' id='removeTimeBox'>
+                        <button class="btn btn-primary" type="submit">Seans Oluştur</button>
+                        
+                    </div>
+
+                    <div>
+                        <label style="color:red">@TempData["MissignDateTime"]</label>
+                        <label style="color:red">@TempData["WrongDate"]</label>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-md-7">
+                <div style="text-align:center">
+                    <h5>Aktif Seans kısmı</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var counter = 1;
+
+        $("#addTimeBox").click(function () {
+
+            if (counter > 6) {
+                alert("Only 6 textboxes allow");
+                return false;
+            }
+
+            var newTextBoxDiv = $(document.createElement('div'))
+                .attr("id", 'TimeDiv' + counter);
+
+            newTextBoxDiv.after().html('<label><b>Seans Saati ' + counter + '</b></label>' +
+                '<input type="time" class="form-control" id="SeanceDTO.SeanceTimes" name="SeanceDTO.SeanceTimes" value="" >'
+
+
+
+
+                //'<input type="date" name="SeanceDTO.StartingDate" id="SeanceDTO.StartingDate" value="" >'
+            );
+
+            newTextBoxDiv.appendTo("#SeanceTimeGroup");
+
+
+            counter++;
+        });
+
+        $("#removeTimeBox").click(function () {
+            if (counter == 1) {
+                alert("No more textbox to remove");
+                return false;
+            }
+            counter--;
+
+            $("#TimeDiv" + counter).remove();
+
+        });
+
+        //$("#getButtonValue").click(function () {
+
+        //    var msg = '';
+        //    for (i = 1; i < counter; i++) {
+        //        msg += "\n Textbox #" + i + " : " + $('#textbox' + i).val();
+        //    }
+        //    alert(msg);
+        //});
+    });
+</script>
+
+
+
+
+
+
+@*'<label>Seans Saati #' + counter + ' : </label>' +*@
+
+

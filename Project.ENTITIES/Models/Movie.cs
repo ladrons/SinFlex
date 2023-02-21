@@ -9,9 +9,9 @@ namespace Project.ENTITIES.Models
 {
     public class Movie : BaseEntity, IDeletionInfo
     {
-        public string? Title { get; set; } //Başlık
-        public string? Content { get; set; } //Film içeriği/konusu
-        public string? Duration { get; set; } //Süre
+        public string Title { get; set; } //Başlık
+        public string Content { get; set; } //Film içeriği/konusu
+        public string Duration { get; set; } //Süre
         public DateTime ReleaseDate { get; set; } //Vizyona giriş tarihi
 
         public int GenreID { get; set; }

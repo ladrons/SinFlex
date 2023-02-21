@@ -11,37 +11,59 @@
     <title>UpdateSaloon</title>
 </head>
 <body>
-    <div style="margin: 10px"><h1 style="text-align:center">Salon Güncelleme Sayfası</h1></div>
-    <div style="text-align:center"><h3>@TempData["DÜZELTİLECEK"]</h3></div>
+    <div class="mb-3" style="text-align:center">
+        <div>
+            <h1>Salon Güncelleme Sayfası</h1>
+            <label>Bu sayfa üzerinden seçmiş olduğunu salonun bilgilerini güncelleyebilirsiniz.</label>
+        </div>
+        <div>
+            <label><a asp-controller="Saloon" asp-action="ListSaloons">Salon Listesi</a></label>
+            <label><a asp-controller="Saloon" asp-action="SaloonDetail" asp-route-id="@Model.SaloonDTO.ID">Salon Detay Sayfası</a></label>
+        </div>
+    </div>
 
-    <hr />
-    <div class="box-1">
+    <div class="successMessage"><h3>@TempData["ProcessCompleted"]</h3></div>
+
+    <div class="container">
         <form asp-action="UpdateSaloon" method="post" style="margin: 20px">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="SaloonDTO.ID" />
 
             <div class="mb-3">
-                <label class="form-label">Salon Adı</label>
+                <b class="form-label">Salon Adı</b>
                 <input type="text" class="form-control" asp-for="SaloonDTO.Name" placeholder="Salon Adı">
                 <span asp-validation-for="SaloonDTO.Name" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Salon Kapasitesi</label>
+                <b class="form-label">Salon Kapasitesi</b>
                 <input type="text" class="form-control" asp-for="SaloonDTO.Capacity" placeholder="Koltuk Kapasitesi">
                 <span asp-validation-for="SaloonDTO.Capacity" class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <b class="form-label">Boyut Türü: </b>
+                @if (Model.SaloonDTO.DimensionType == "2D")
+                {
+                    <label>2D</label>
+                    <input type="radio" asp-for="SaloonDTO.DimensionType" value="2D" checked />
+                    <span>|</span>
+                    <label>3D</label>
+                    <input type="radio" asp-for="SaloonDTO.DimensionType" value="3D" />
+                }
+                else
+                {
+                    <label>2D</label>
+                    <input type="radio" asp-for="SaloonDTO.DimensionType" value="2D" />
+                    <span>|</span>
+                    <label>3D</label>
+                    <input type="radio" asp-for="SaloonDTO.DimensionType" value="3D" checked />
+                }
+                <span asp-validation-for="SaloonDTO.DimensionType" class="text-danger"></span>
+            </div>
             <button class="btn btn-primary" type="submit">Salonu Güncelle</button>
         </form>
     </div>
 </body>
 </html>
-
-<style>
-    .box-1 {
-        width: 800px;
-        height: auto;
-    }
-</style>

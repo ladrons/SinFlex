@@ -4,11 +4,12 @@
 }
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Ekranı</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -18,51 +19,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="registration-form">
-        <form asp-action="Login" method="post">
-            <div class="form-icon">
-                <span><i class="icon icon-user"></i></span>
-            </div>
-            <h3 style="text-align:center">Giriş Yap</h3><br />
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @*<input type="text" class="form-control item" id="username" placeholder="Kullanıcı Adı">*@
-                <input type="text" class="form-control item" asp-for="AppUserDTO.Username" placeholder="Kullanıcı Adı">
-                <span asp-validation-for="AppUserDTO.Username" class="text-danger"></span>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center" style="height:100vh;">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">Login Ekranı</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Kullanıcı Adı</label>
+                                <input type="text" class="form-control" id="username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Şifre</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                @*<input type="password" class="form-control item" id="password" placeholder="Şifre">*@
-                <input type="password" class="form-control item" asp-for="AppUserDTO.Password" placeholder="Şifre">
-                <span asp-validation-for="AppUserDTO.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-block create-account" type="submit">Giriş Yap</button>
-            </div>
-
-           @* <div class="form-group">
-                <input type="text" class="form-control item" id="email" placeholder="Email">
-            </div>*@
-            @*<div class="form-group">
-                <input type="text" class="form-control item" id="phone-number" placeholder="Phone Number">
-            </div>*@
-            @*<div class="form-group">
-                <input type="text" class="form-control item" id="birth-date" placeholder="Birth Date">
-            </div>*@
-        </form>
-
-        <div class="social-media">
-            @*<h5>Sign up with social media</h5>*@
-               @*<div class="social-icons">
-                <a href="#"><i class="icon-social-facebook" title="Facebook"></i></a>
-                <a href="#"><i class="icon-social-google" title="Google"></i></a>
-                <a href="#"><i class="icon-social-twitter" title="Twitter"></i></a>
-            </div>*@
         </div>
     </div>
 
-    <!--///-->
-
+    <!-- Bootstrap 5 JavaScript -->
     <script src="~/js/test.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

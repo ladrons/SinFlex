@@ -16,5 +16,6 @@ namespace Project.BLL.ManagerServices.Abstracts
 
 
         Task<bool> CheckSameMovie(MovieDTO movieDTO);
+        bool CheckIfAssigned(Movie movie);
     }
 }

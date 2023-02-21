@@ -53,5 +53,16 @@ namespace Project.BLL.ManagerServices.Concretes
         {
             return _movieRep.CheckSameMovie(movieDTO);
         }
+
+        //-------------------------------------\\
+
+        public bool CheckIfAssigned(Movie movie)
+        {
+            if (movie.Saloons.Count > 0) //Bu bloğa girerse atanmış salon var demektir.
+                return false;
+
+            else //Bu bloğa girerse atanmış salon yok demektir.
+                return true;
+        }
     }
 }

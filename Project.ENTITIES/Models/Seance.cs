@@ -8,9 +8,14 @@ namespace Project.ENTITIES.Models
 {
     public class Seance : BaseEntity
     {
-        public string? Name { get; set; }
-        public string? Time { get; set; } 
-    }
+        public DateTime Date { get; set; } //Seansın tarih bilgisi
+        public string Time { get; set; } //Seansın saat bilgisi
 
-    //Relational Properties
+        public int SaloonID { get; set; }
+
+
+        //Relational Properties
+
+        public virtual Saloon Saloon { get; set; }
+    }
 }

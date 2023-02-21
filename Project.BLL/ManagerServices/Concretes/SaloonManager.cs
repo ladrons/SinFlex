@@ -24,7 +24,9 @@ namespace Project.BLL.ManagerServices.Concretes
             Saloon saloon = new Saloon
             {
                 Name = saloonDTO.Name,
-                Capacity = Convert.ToUInt16(saloonDTO.Capacity)
+                Capacity = Convert.ToUInt16(saloonDTO.Capacity),
+                DimensionType = saloonDTO.DimensionType,
+                IsOpen = (saloonDTO == null) ? true : saloonDTO.IsOpen
             };
             return saloon;
         }
@@ -35,7 +37,9 @@ namespace Project.BLL.ManagerServices.Concretes
             {
                 ID = saloon.ID.ToString(),
                 Name = saloon.Name,
-                Capacity = saloon.Capacity
+                Capacity = saloon.Capacity,
+                DimensionType = saloon.DimensionType,
+                IsOpen = saloon.IsOpen
             };
             return saloonDTO;
         }

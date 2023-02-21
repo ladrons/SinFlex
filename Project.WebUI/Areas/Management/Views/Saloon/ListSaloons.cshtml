@@ -15,45 +15,45 @@
     <div style="text-align:center">
         <h2>Kayıtlı Salon Listesi</h2>
         <label>Bu sayfada kayıtlı bütün salonları görüntüleyebilir, durumlarını kontrol edebilirsiniz.</label>
-        <hr />
+        <br />
         <label>Salon hakkında daha fazla işlem yapmak için <b>'Detayları Göster'</b> butonuna tıklayın.</label>
+        <hr />
     </div>
 
-    <div style="text-align:center"><h3>@TempData["ProcessCompleted"]</h3></div>
+    <div class="successMessage"><h5>@TempData["ProcessCompleted"]</h5></div>
+    <div class="errorMessage"><h5>@TempData["ErrorMessageName"]</h5></div> @*ToDo:Hata mesaj adı eklenecek.*@
 
     <div class="container-md">
         <table class="table">
             <thead>
-                <tr>
+                <tr style="text-align:center">
                     <th scope="col">Salon ID</th>
                     <th scope="col">Salon İsmi</th>
-                    <th scope="col">Seyirci Kapasitesi</th>
+                    <th scope="col">Koltuk Sayısı</th>
                     <th scope="col">Salon Durumu</th>
                     <th scope="col">İşlemler</th>
-
-                    @*<th colspan="1" style="text-align:center">İşlemler</th>*@
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Saloons)
                 {
-                    if (item.Status == Project.ENTITIES.Enums.DataStatus.Deleted)
+                    if (item.IsOpen == false)
                     {
-                        <tr class="table-danger">
+                        <tr style="text-align:center">
                             <th scope="row">@item.ID</th>
                             <td>@item.Name</td>
                             <td>@item.Capacity</td>
-                            <td>Kapalı</td>
+                            <td><b style="color:red">Kapalı</b></td>
                             <td><a asp-controller="Saloon" asp-action="SaloonDetail" asp-route-id="@item.ID" class="btn btn-outline-secondary">Detayları Göster</a></td>
                         </tr>
                     }
                     else
                     {
-                        <tr class="table-success">
+                        <tr style="text-align:center"> 
                             <th scope="row">@item.ID</th>
                             <td>@item.Name</td>
                             <td>@item.Capacity</td>
-                            <td>Açık</td>
+                            <td><b style="color:green">Açık</b></td>
                             <td><a asp-controller="Saloon" asp-action="SaloonDetail" asp-route-id="@item.ID" class="btn btn-outline-secondary">Detayları Göster</a></td>
                         </tr>
                     }

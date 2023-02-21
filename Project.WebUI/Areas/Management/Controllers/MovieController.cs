@@ -63,7 +63,7 @@ namespace Project.WebUI.Areas.Management.Controllers
                 TempData["ProcessCompleted"] = "Kayıt işlemi başarılı bir şekilde gerçekleştirildi.";
                 return RedirectToAction("ListMovies");
             }
-            TempData["SameMovieAlert"] = String.Format("Veritabanında '{0}' isimli bir film bulunmaktadır.", movieDTO.Title);
+            TempData["ErrorMessage"] = String.Format("Veritabanında '{0}' isimli bir film bulunmaktadır.", movieDTO.Title);
             return RedirectToAction("AddMovie");
         }
 
@@ -72,6 +72,11 @@ namespace Project.WebUI.Areas.Management.Controllers
         public async Task<IActionResult> UpdateMovie(int id)
         {
             Movie foundMovie = await _movieMan.Find(id);
+            if (foundMovie == null)
+            {
+                TempData["ErrorMessage"] = "Lütfen geçerli bir film seçiniz.";
+                return RedirectToAction("ListMovies");
+            }
 
             MovieVM mvm = new MovieVM
             {
@@ -93,7 +98,7 @@ namespace Project.WebUI.Areas.Management.Controllers
                 };
                 return View(mvm);
             }
-            Movie updateMovie = await _movieMan.Find(Convert.ToInt32(movieDTO.ID)); //ToDo: ID gelmez ise ne olur? Test edilecek.
+            Movie updateMovie = await _movieMan.Find(Convert.ToInt32(movieDTO.ID));
 
             updateMovie.Title = movieDTO.Title; 
             updateMovie.Content = movieDTO.Content; 
@@ -116,15 +121,20 @@ namespace Project.WebUI.Areas.Management.Controllers
         public async Task<IActionResult> DeleteMovie(int id)
         {
             Movie foundMovie = await _movieMan.Find(id);
+            if (_movieMan.CheckIfAssigned(foundMovie))
+            {
+                AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
 
-            AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
+                foundMovie.ReasonForDelete = ""; //ToDo: Silme nedeni bilgisini kullanıcıdan almak için bir UI yapmak lazım.
+                foundMovie.WhoDeleted = sessionUser.Username;
 
-            foundMovie.ReasonForDelete = ""; //ToDo: Silme nedeni bilgisini kullanıcıdan almak için bir UI yapmak lazım.
-            foundMovie.WhoDeleted = sessionUser.Username;
+                _movieMan.Delete(foundMovie);
+                await _movieMan.SaveAsync();
 
-            _movieMan.Delete(foundMovie);
-            await _movieMan.SaveAsync();
-
+                TempData["ProcessCompleted"] = "Seçtiğiniz film başarılı bir şekilde silinmiştir.";
+                return RedirectToAction("ListMovies");
+            }
+            TempData["ErrorMessage"] = "Silmek istediğiniz film şuan da gösterimdedir. Lütfen filmi önce atanmış salonlardan kaldırın.";
             return RedirectToAction("ListMovies");
         }
 

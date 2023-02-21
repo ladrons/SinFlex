@@ -12,20 +12,29 @@
 </head>
 
 <body>
-    <div style="text-align:center"><h3>@TempData["ProcessCompleted"]</h3></div>
-    <div style="text-align:center"><h5>@ViewBag.UserInfo</h5></div>
+    <div class="container-xxl">
+        <div>
+            <div style="text-align:center">
+                <h1>Kayıtlı Film Listesi</h1>
+                <label>Bu sayfada kayıtlı olan bütün filmleri görüntüleyebilir, güncelleme ve silme işlemleri gerçekleştirebilirsiniz.</label>
+            </div>
 
-    <div style="margin: 10px">
+            <div>
+                <div class="successMessage"><h5>@TempData["ProcessCompleted"]</h5></div>
+                <div class="errorMessage"><h5>@TempData["ErrorMessage"]</h5></div>
+            </div>
+        </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Duration</th>
-                    <th scope="col">Release Date</th>
-                    <th colspan="2">Process</th>
+                    <th scope="col">Film Adı</th>
+                    <th scope="col">Tür</th>
+                    <th scope="col">Açıklama</th>
+                    <th scope="col">Süre</th>
+                    <th scope="col">Vizyon Tarihi</th>
+                    <th colspan="2">İşlemler</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,13 +47,14 @@
                         <td>@item.Content</td>
                         <td>@item.Duration Dakika</td>
                         <td>@item.ReleaseDate.ToLongDateString()</td>
-                        <td><a asp-controller="Movie" asp-action="UpdateMovie" asp-route-id="@item.ID" class="btn btn-primary">Update</a></td>
-                        <td><a asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                        <td><a asp-controller="Movie" asp-action="UpdateMovie" asp-route-id="@item.ID" class="btn btn-primary">Güncelle</a></td>
+                        <td><a asp-controller="Movie" asp-action="DeleteMovie" asp-route-id="@item.ID" class="btn btn-danger">Kaldır</a></td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+    <div style="text-align:center"><h5>@ViewBag.UserInfo</h5></div>
 </body>
 </html>
 

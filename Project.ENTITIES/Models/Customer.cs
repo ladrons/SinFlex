@@ -9,9 +9,9 @@ namespace Project.ENTITIES.Models
 {
     public class Customer : BaseEntity
     {
-        public string? Username { get; set; } //Kullancı adı
-        public string? Password { get; set; } //Şifre
-        public string? EMail { get; set; } //E-Posta adresi
+        public string Username { get; set; } //Kullancı adı
+        public string Password { get; set; } //Şifre
+        public string EMail { get; set; } //E-Posta adresi
         public DateTime BirthDate { get; set; } //Doğum Tarihi
 
         public bool AccountConfirm { get; set; } //Hesap onay durumu (False ise hesap onaylanmamıştır)

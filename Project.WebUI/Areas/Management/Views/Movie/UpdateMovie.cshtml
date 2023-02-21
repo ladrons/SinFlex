@@ -10,11 +10,18 @@
     <title>AddMovie</title>
 </head>
 <body>
-    <div style="margin: 10px"><h1 style="text-align:center">Film Güncelleme Sayfası</h1></div>
-    <div style="text-align:center"><h3>@TempData["SameMovieAlert"]</h3></div>
+    <div style="text-align:center">
+        <div>
+            <h1>Film Güncelleme Sayfası</h1>
+            <label>Bu sayfa yardımı ile seçmiş olduğunuz filmin bilgilerini güncelleyebilirsiniz.</label>
+        </div>
+        <div class="errorMessage">
+            <h5>@TempData["SameMovieAlert"]</h5>
+        </div>
+    </div>
 
     <hr />
-    <div class="box-1">
+    <div class="container-xxl">
         <form asp-action="UpdateMovie" method="post" style="margin: 20px">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -68,10 +75,3 @@
     </div>
 </body>
 </html>
-
-<style>
-    .box-1 {
-        width: 800px;
-        height: auto;
-    }
-</style>

@@ -1,48 +1,219 @@
 ﻿@{
-    Layout = null;
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="tr">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Dashboard</title>
-
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.rtl.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+    <title>SinFlex - Dashboard</title>
 </head>
 <body>
-    <div class="button-main">
-        <div class="button"><button type="button" class="btn btn-secondary">MOVIES</button></div>
-        <div class="button"><button type="button" class="btn btn-secondary">APPUSERS</button></div>
-        <div class="button"><button type="button" class="btn btn-secondary">SALOONS</button></div>
-        <div class="button"><button type="button" class="btn btn-secondary">Null</button></div>
-        <div class="button"><button type="button" class="btn btn-secondary">Null</button></div>
+    <div class="container-xxl" id="">
+        <div class="row">
+            <div class="col" id="div-border-line">
+                <div>
+                    <h5 style="text-align:center">Açık Salonlar</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Process</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>mdo</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>fat</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>twitter</td>
+                                <td>Button</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="col-5" id="div-border-line">
+                <h5 style="text-align:center">Vizyon Tarihi Yaklaşan Filmler</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                            <th scope="col">Process</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>mdo</td>
+                            <td>Button</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>fat</td>
+                            <td>Button</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>twitter</td>
+                            <td>Button</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col" id="div-border-line">
+                <div>
+                    <h5 style="text-align:center">Açık Salonlar</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Process</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>mdo</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>fat</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>twitter</td>
+                                <td>Button</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col" id="div-border-line">
+                <div>
+                    <h5 style="text-align:center">Açık Salonlar</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Process</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>mdo</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>fat</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>twitter</td>
+                                <td>Button</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col" id="div-border-line">
+                <div>
+                    <h5 style="text-align:center">Açık Salonlar</h5>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Process</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>mdo</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>fat</td>
+                                <td>Button</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>twitter</td>
+                                <td>Button</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-    <div style="text-align:center">@ViewBag.Name</div>
-
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <script src="~/js/site.js"></script>
 </body>
 </html>
 
 <style>
-    .button-main{
-        
-        display: flex;
-        margin: 10px 10px 10px 10px;
-        justify-content: center;
-    }
-    .button{
-        padding-right: 10px;
-        
+    #div-border-line{
+        border: 1px solid #000000;
+        margin: 2px;
     }
 </style>

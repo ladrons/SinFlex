@@ -20,15 +20,25 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="mb-3">
-                <label class="form-label">Salon Adı</label>
+                <b class="form-label">Salon Adı</b>
                 <input type="text" class="form-control" asp-for="SaloonDTO.Name" placeholder="Salon Adı">
                 <span asp-validation-for="SaloonDTO.Name" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Salon Kapasitesi</label>
+                <b class="form-label">Salon Kapasitesi</b>
                 <input type="text" class="form-control" asp-for="SaloonDTO.Capacity" placeholder="Koltuk Kapasitesi">
                 <span asp-validation-for="SaloonDTO.Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <div> <b>Boyut Türü</b> </div>
+                <label>2D</label>
+                <input type="radio" asp-for="SaloonDTO.DimensionType" value="2D" />
+                <span>|</span>
+                <label>3D</label>
+                <input type="radio" asp-for="SaloonDTO.DimensionType" value="3D" />
+                <span asp-validation-for="SaloonDTO.DimensionType" class="text-danger"></span>
             </div>
 
             <button class="btn btn-primary" type="submit">Salon Oluştur</button>

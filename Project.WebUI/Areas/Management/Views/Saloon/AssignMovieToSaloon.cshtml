@@ -13,50 +13,32 @@
 <body>
     <div style="text-align:center">
         <h2>Film Atama Sayfası</h2>
-        <label>Bu sayfa üzerinden seçmiş olduğunuz salona film ataması yapabilirsiniz.</label>
+        <label>
+            Bu sayfa üzerinden <b>'@Model.Saloon.Name'</b> isimli salona yeni film atayabilir, atanmış bir filmi değiştirebilirsiniz.
+        </label>
     </div>
 
     <hr />
 
     <div class="container">
-        <form asp-controller="Saloon" asp-action="AssignMovieToSaloon" method="post">
-            <div class="mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-controller="Saloon" asp-action="AssignMovieToSaloon" method="post">
+                    <input type="hidden" asp-for="Saloon.ID" />
 
-                <input type="hidden" asp-for="Saloon.ID" />
-
-                <div class="mb-1">
-                    <b class="form-label">Seçili Salonun İsmi:</b>
-                    <label class="form-label">@Model.Saloon.Name</label>
-                </div>
-
-                <div class="mb-1">
-                    <b class="form-label">Seçili Salonun Kapasitesi:</b>
-                    <label class="form-label">@Model.Saloon.Capacity</label>
-                </div>
-
-                <div class="mb-1">
-                    @if (Model.Saloon.Movie != null)
-                    {
-                        <b class="form-label">Seçili Salonda Gösterimde olan Film:</b>
-                        <label class="form-label">@Model.Saloon.Movie.Title</label>
-                    }
-                    else
-                    {
-                        <b class="form-label">Seçili Salonda Gösterimde olan Film:</b>
-                        <label class="form-label" >Atanmış film bulunamadı</label>
-                    }
-                </div>
-
+                    <div class="mb-3">
+                        <label class="form-label">Aktif Film Listesi</label>
+                        <select class="form-select" asp-items="Model.MoviesSelectList" asp-for="Movie.ID"></select>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary" type="submit">Film Ata</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Aktif Film Listesi</label>
-                <select class="form-select" asp-items="Model.MoviesSelectList" asp-for="Movie.ID"></select>
+            <div class="col-md-8">
+                <h1 style="text-align:center">YAN KISIM</h1>
             </div>
-            <div class="mb-3">
-                <button class="btn btn-primary" type="submit">Film Ata</button>
-            </div>
-        </form>
+        </div>
     </div>
 </body>
 </html>
