@@ -1,0 +1,71 @@
+﻿@model TicketVM
+@{
+    ViewData["Title"] = "UpdateTicket";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UpdateMovie</title>
+</head>
+<body>
+    <div>
+        <div class="titleAndLabel">
+            <h2>Bilet Güncelleme Sayfası</h2>
+            <label>Bu sayfa ile seçtiğiniz biletin bilgilerini güncelleyebilirsiniz.</label>
+        </div>
+        <div>
+            @*<h5 class="successMessage">@TempData["ProcessCompleted"]</h5>*@
+        </div>
+    </div>
+
+    <hr />
+    <div class="container">
+        <form asp-action="UpdateTicket" method="post">
+            <input type="hidden" asp-for="Ticket.ID" />
+
+            <div class="mb-3">
+                <label class="form-label">Bilet Adı</label>
+                <input type="text" class="form-control" asp-for="Ticket.Name" placeholder="Bilet Adı">
+                <span asp-validation-for="Ticket.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Bilet Türü</label>
+                <input type="text" class="form-control" asp-for="Ticket.Type" placeholder="Bilet Türü">
+                <span asp-validation-for="Ticket.Type" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Bilet Birim Fiyatı</label>
+                <input type="text" class="form-control" asp-for="Ticket.Price" placeholder="Bilet Birim Fiyatı">
+                <span asp-validation-for="Ticket.Price" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Bileti Güncelle</button>
+        </form>
+    </div>
+</body>
+</html>
+
+
+@*<div class="mb-3">
+    @{
+        foreach (var item in Model.Genres)
+        {
+            <label>@item.Name:</label>
+            if (Model.MovieDTO.Genre == item.Name)
+            {
+                <input type="radio" asp-for="MovieDTO.Genre" value="@item.Name" checked />
+            }
+            else
+            {
+                <input type="radio" asp-for="MovieDTO.Genre" value="@item.Name" />
+            }
+            <span>|</span>
+        }
+        <span asp-validation-for="MovieDTO.Genre" class="text-danger"></span>
+    }
+</div>*@

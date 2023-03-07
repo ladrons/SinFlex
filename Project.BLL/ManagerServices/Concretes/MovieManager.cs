@@ -49,9 +49,9 @@ namespace Project.BLL.ManagerServices.Concretes
 
         //-------------------------------------\\
 
-        public Task<bool> CheckSameMovie(MovieDTO movieDTO)
+        public Task<bool> CheckSameMovie(Movie movie)
         {
-            return _movieRep.CheckSameMovie(movieDTO);
+            return _movieRep.CheckSameMovie(movie);
         }
 
         //-------------------------------------\\

@@ -3,16 +3,20 @@ using Project.BLL.ManagerServices.Abstracts;
 using Project.COMMON.Tools;
 using Project.DTO.Internal;
 using Project.ENTITIES.Models;
+using Project.WebUI.Areas.Management.VMClasses;
 
 namespace Project.WebUI.Areas.Management.Controllers
 {
     [Area("Management")]
     public class HomeController : Controller
     {
-        IAppUserManager _appUserMan;
-        public HomeController(IAppUserManager appUserMan)
+        IAppUserManager _appUserMan; ISaloonManager _saloonMan; IGenreManager _genreMan;
+
+        public HomeController(IAppUserManager appUserMan, ISaloonManager saloonMan, IGenreManager genreMan)
         {
             _appUserMan = appUserMan;
+            _saloonMan = saloonMan;
+            _genreMan = genreMan;
         }
 
         #region Login GET/POST
@@ -27,7 +31,7 @@ namespace Project.WebUI.Areas.Management.Controllers
             if (!ModelState.IsValid) return View();
 
             HttpContext.Session.SetObject("user", await _appUserMan.GetFoundUser(appUserDTO));
-            return RedirectToAction("ListMovies", "Movie", new {area = "Management"});
+            return RedirectToAction("ListMovies", "Movie", new { area = "Management" });
 
             //return RedirectToAction("Dashboard");
         }
@@ -35,17 +39,50 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         //-------------------------------------//
 
+
+
+        //-------------------------------------//
+
+
+
+
         public IActionResult Dashboard()
         {
             AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
             if (sessionUser != null) ViewBag.Name = sessionUser.Firstname;
 
-            return View();
+            List<Saloon> allSaloon = _saloonMan.GetAll().ToList();
+            if (allSaloon == null)
+            {
+                
+            }
+
+            DashboardVM dvm = new DashboardVM
+            {
+                Saloons = allSaloon
+            };
+
+            return View(dvm);
         }
 
         //-------------------------------------//
+        public IActionResult AddGenre()
+        {
+            return View();
+        }
 
-        //Genre ekleme işini ya buraya ya da Dashboard içine yapabilirim.
+        [HttpPost]
+        public async Task<IActionResult> AddGenre(Genre genre)
+        {
+            Genre newGenre = new Genre
+            {
+                Name = genre.Name,
+            };
+            await _genreMan.AddAsync(newGenre);
+            await _genreMan.SaveAsync();
+
+            return RedirectToAction("Dashboard");
+        }
 
         //-------------------------------------//
     }

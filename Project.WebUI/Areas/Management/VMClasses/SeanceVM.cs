@@ -9,7 +9,7 @@ namespace Project.WebUI.Areas.Management.VMClasses
         public Seance Seance { get; set; }
         public SeanceDTO SeanceDTO { get; set; }
 
-        public IQueryable<Seance> Seances { get; set; }
+        public ICollection<Seance> Seances { get; set; }
 
         //-------------------------------------//
 

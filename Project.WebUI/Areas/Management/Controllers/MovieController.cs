@@ -44,26 +44,26 @@ namespace Project.WebUI.Areas.Management.Controllers
         [HttpPost]
         public async Task<IActionResult> AddMovie(MovieDTO movieDTO)
         {
-            if (!ModelState.IsValid) 
-            { 
+            if (!ModelState.IsValid)
+            {
                 MovieVM mvm = new MovieVM
                 {
                     Genres = _genreMan.GetActives()
                 };
                 return View(mvm);
-            } //Eğer validation da hata olmadıysa işlemler aşağıdan devam edecek;
+            }
+            Genre findGenre = await _genreMan.FirstOrDefault(x => x.Name == movieDTO.Genre);
+            Movie newMovie = _movieMan.ConvertFromDTO(movieDTO, findGenre);
 
-            if (await _movieMan.CheckSameMovie(movieDTO))
+            if (await _movieMan.CheckSameMovie(newMovie))
             {
-                Genre findGenre = await _genreMan.FirstOrDefault(x => x.Name == movieDTO.Genre);
-
                 await _movieMan.AddAsync(_movieMan.ConvertFromDTO(movieDTO, findGenre));
                 await _movieMan.SaveAsync();
 
                 TempData["ProcessCompleted"] = "Kayıt işlemi başarılı bir şekilde gerçekleştirildi.";
                 return RedirectToAction("ListMovies");
             }
-            TempData["ErrorMessage"] = String.Format("Veritabanında '{0}' isimli bir film bulunmaktadır.", movieDTO.Title);
+            TempData["SameMovieAlert"] = String.Format("Veritabanında '{0}' isimli bir film bulunmaktadır.", movieDTO.Title);
             return RedirectToAction("AddMovie");
         }
 
@@ -99,14 +99,12 @@ namespace Project.WebUI.Areas.Management.Controllers
                 return View(mvm);
             }
             Movie updateMovie = await _movieMan.Find(Convert.ToInt32(movieDTO.ID));
-
-            updateMovie.Title = movieDTO.Title; 
-            updateMovie.Content = movieDTO.Content; 
-            updateMovie.Duration = movieDTO.Duration; 
-            updateMovie.ReleaseDate = movieDTO.ReleaseDate;
-
             Genre findGenre = await _genreMan.FirstOrDefault(x => x.Name == movieDTO.Genre);
 
+            updateMovie.Title = movieDTO.Title;
+            updateMovie.Content = movieDTO.Content;
+            updateMovie.Duration = movieDTO.Duration;
+            updateMovie.ReleaseDate = movieDTO.ReleaseDate;
             updateMovie.Genre = findGenre;
 
             _movieMan.Update(updateMovie);
@@ -126,7 +124,7 @@ namespace Project.WebUI.Areas.Management.Controllers
                 AppUser sessionUser = HttpContext.Session.GetObject<AppUser>("user");
 
                 foundMovie.ReasonForDelete = ""; //ToDo: Silme nedeni bilgisini kullanıcıdan almak için bir UI yapmak lazım.
-                foundMovie.WhoDeleted = sessionUser.Username;
+                foundMovie.WhoDeleted = "TEST";  /*sessionUser.Username;*/
 
                 _movieMan.Delete(foundMovie);
                 await _movieMan.SaveAsync();
@@ -134,7 +132,7 @@ namespace Project.WebUI.Areas.Management.Controllers
                 TempData["ProcessCompleted"] = "Seçtiğiniz film başarılı bir şekilde silinmiştir.";
                 return RedirectToAction("ListMovies");
             }
-            TempData["ErrorMessage"] = "Silmek istediğiniz film şuan da gösterimdedir. Lütfen filmi önce atanmış salonlardan kaldırın.";
+            TempData["DedicatedMovie"] = "Silmek istediğiniz film şuan da gösterimdedir. Lütfen filmi önce atanmış salonlardan kaldırın.";
             return RedirectToAction("ListMovies");
         }
 

@@ -1,0 +1,45 @@
+﻿@model BoxOfficeVM
+@{
+    ViewData["Title"] = "ListBoxOffices";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List BoxOffices</title>
+</head>
+
+<body>
+    <div style="text-align:center">
+        <h2>Gişe Listesi</h2>
+        <label>Lütfen çalışacağınız gişeyi seçin.</label>
+    </div>
+
+    <div class="successMessage"><h5>@TempData["ProcessCompleted"]</h5></div>
+    <div class="errorMessage"><h5>@TempData["ErrorMessageName"]</h5></div> @*ToDo:Hata mesaj adı eklenecek.*@
+
+    <div class="container-md">
+        <table class="table">
+            <thead>
+                <tr style="text-align:center">
+                    <th scope="col">Gişe ID</th>
+                    <th scope="col">Gişe Adı</th>
+                    <th scope="col">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BoxOffices)
+                {
+                    <tr style="text-align:center">
+                        <th scope="row">@item.ID</th>
+                        <td>@item.Name</td>
+                        <td><a asp-controller="Saloon" asp-action="SaloonDetail" asp-route-id="@item.ID" class="btn btn-primary">Gişeyi Seç</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

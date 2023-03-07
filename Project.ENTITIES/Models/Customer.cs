@@ -27,5 +27,7 @@ namespace Project.ENTITIES.Models
         //Relational Properties
 
         public virtual CustomerProfile CustomerProfile { get; set; }
+
+        public virtual ICollection<SoldTicket> SoldTickets { get; set; }
     }
 }

@@ -1,0 +1,54 @@
+﻿@model SeanceVM
+@{
+    ViewData["Title"] = "ActiveSeancesOfSaloon";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ActiveSeancesOfSaloon</title>
+</head>
+
+<body>
+    <div>
+        <div style="text-align:center">
+            <h2>@Model.Saloon.Name Aktif Seans Listesi</h2>
+            <label>Bu sayfa üzerinden seçmiş olduğunuz salonun seans bilgilerini görebilir, güncelleyebilir ya da seansı kaldırabilirsiniz.</label>
+        </div>
+
+        <div>
+            <h4 class="errorMessage">@TempData["ProcessCompleted"]</h4>
+        </div>
+    </div>
+
+    <div class="container-xxl">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Seans Tarihi</th>
+                    <th scope="col">Seans Saati</th>
+                    <th scope="col">Salon Adı</th>
+                    <th colspan="2">Process</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Seances)
+                {
+                    <tr>
+                        <th scope="row">@item.ID</th>
+                        <td>@item.Date.ToLongDateString()</td>
+                        <td>@item.Time</td>
+                        <td>@item.Saloon.Name</td>
+                        <td><a asp-controller="Seance" asp-action="Null" asp-route-id="@item.ID" class="btn btn-primary">NULL</a></td>
+                        <td><a asp-controller="Seance" asp-action="DeleteSeance" asp-route-id="@item.ID" class="btn btn-danger">Seansı Kaldır</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+

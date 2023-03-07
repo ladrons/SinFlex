@@ -1,0 +1,25 @@
+﻿@model DashboardVM
+@{
+    ViewData["Title"] = "AddGenre";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Add Genre</title>
+</head>
+<body>
+    <div class="container-xxl">
+        <form asp-action="AddGenre" method="post">
+            <div class="mb-3">
+                <label class="form-label">Tür Adı</label>
+                <input type="text" class="form-control" asp-for="Genre.Name" placeholder="Tür Adı">
+            </div>
+            <button class="btn btn-primary" type="submit">Tür Oluştur</button>
+        </form>
+    </div>
+</body>
+</html>
+

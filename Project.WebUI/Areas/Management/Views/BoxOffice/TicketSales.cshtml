@@ -1,0 +1,415 @@
+﻿@model BoxOfficeVM
+@{
+    ViewData["Title"] = "TicketSales";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ticket Sales</title>
+</head>
+
+<body>
+    <div style="text-align:center">
+        <h2>Bilet Satış Ekranı</h2>
+        <hr />
+    </div>
+    <div class="container">
+        <div>
+            <h4>Lütfen bir film seçiniz.</h4>
+            <div class="list-group">
+                @foreach (var item in Model.Movies)
+                {
+                    <a id="@item.ID" class="getDates list-group-item list-group-item-action">@item.Title</a>
+                    //Yukarıdaki butona tıklandığında ilgili filme ait seans tarihleri listelenecek.
+                }
+            </div>
+        </div>
+        <hr />
+        <div>
+            <h4>Lütfen bir tarih seçiniz.</h4>
+            <div class="list-group" id="dateList"></div>
+        </div>
+        <hr />
+        <div>
+            <h4>Lütfen bir saat seçiniz.</h4>
+            <div class="list-group" id="timeList"></div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    $(function () {
+        $(".getDates").click(function () {
+            //console.log("test 01") //Test içindir.
+
+            var myId = $(this).attr('id');
+            //console.log(myId) //Test içindir.
+
+            $.ajax({
+                url: "https://localhost:44374/Management/BoxOffice/BringSeanceDates",
+                data: { id: myId },
+                type: "Get",
+                success: function (data) {
+                    AddDates(data);
+                }
+            })
+        })
+    })
+
+    function AddDates(dataList) {
+        if ($("#dateList").children().length > 0) {
+            $("#dateList").empty();
+            $.each(dataList, function (key, data) {
+                $("#dateList").append("<input type='button' id=" + data.id + " class='getTimes list-group-item list-group-item-action' value=" + data.date + " />");
+            })
+
+            console.log("if bloğu çalıştı") //Test içindir.
+        }
+        else {
+            $.each(dataList, function (key, data) {
+                $("#dateList").append("<input type='button' id=" + data.id + " class='getTimes list-group-item list-group-item-action' value=" + data.date + " />");
+            })
+
+            console.log("else bloğu çalıştı") //Test içindir.
+        }
+    }
+
+    //-------------------------------//
+
+    $(document).on("click", ".getTimes", function () {
+        console.log("test")
+        var myId = $(this).attr("id");
+
+        $.ajax({
+            url: "https://localhost:44374/Management/BoxOffice/BringSeanceTimes",
+            data: { id: myId },
+            type: "GET",
+            success: function (data) {
+                AddTimes(data);
+            }
+        });
+    });
+
+    function AddTimes(dataList) {
+        if ($("#timeList").children().length > 0) {
+            $("#timeList").empty();
+            $.each(dataList, function (key, data) {
+                $("#timeList").append("<input type='button' id='#' class='list-group-item list-group-item-action' value=" + data + " />");
+            })
+
+            console.log("if bloğu çalıştı") //Test içindir.
+        }
+        else {
+            $.each(dataList, function (key, data) {
+                $("#timeList").append("<input type='button' id='#' class='list-group-item list-group-item-action' value=" + data + " />");
+            })
+
+            console.log("else bloğu çalıştı") //Test içindir.
+        }
+    }
+</script>
+
+<style>
+    .test {
+        border: 1px solid black;
+    }
+</style>
+
+
+
+@*    //$(function () {
+    //    $(".getTimes").click(function () {
+    //        console.log("test")
+    //        var myId = $(this).attr("id");
+
+    //        $.ajax({
+    //            url: "https://localhost:44374/Management/BoxOffice/BringSeanceTimes",
+    //            data: { id: myId },
+    //            type: "Get",
+    //            success: function (data) {
+    //                AddTimes(data);
+    //            }
+    //        })
+    //    })
+    //})*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<script>
+    //ÖRNEKTİR
+    $(function () {
+        $("#btnAll").click(function () {
+
+            $.ajax({
+                url: "https://localhost:44346/api/Category/ListCategories",
+                type: "Get",
+                success: function (data) {
+                    BringDataList(data);
+                }
+            })
+        })
+    })
+
+    //< input type = "button" id = "btnAll" class="btn btn-info" value = "Kategorileri Getir" />
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .kutu-parent {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .kutu {
+        position: relative;
+        width: 300px;
+        height: 400px;
+        margin-bottom: 20px;
+    }
+
+        .kutu img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .kutu .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 55%;
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(3px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .kutu h2, .kutu p {
+            text-align: center;
+        }
+
+        .kutu h2 {
+            margin-top: 0;
+        }
+
+        .kutu p {
+            margin-bottom: 0;
+        }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*Aktif olan bütün filmleri listeleyeceğim.
+            Seçilen filme ait bütün seans tarihlerini listeleyeceğim.
+            Seçilen tarihe göre bütün seans saatlerini listeleyeceğim.
+
+            Buradan yapılan seçimleri tutup bilet seçme ve koltuk seçme ekranına geçeceğim ardından da satış işlemi yapılacak.
+
+
+            Film tarih ve saat seçme kısmını tek sayfada yapacağım o yüzden JQuery ve JS kullanmam gerek.
+        *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*ÖNEMLİ KISIM*@
+
+@*<div class="container">
+    <div class="kutu-parent">
+        <div class="kutu">
+            <img src="https://picsum.photos/id/237/800/600" alt="Resim 1">
+            <div class="overlay">
+                <h3>Kayıp Balık Nemo 4</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur venenatis felis sed volutpat.</p>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/238/800/600" alt="Resim 2">
+            <div class="overlay">
+                <h2>Başlık 2</h2>
+                <p>Örnek yazı 2</p>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/239/800/600" alt="Resim 3">
+            <div class="overlay">
+                <h2>Başlık 3</h2>
+                <p>Örnek yazı 3</p>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/240/800/600" alt="Resim 4">
+            <div class="overlay">
+                <h2>Başlık 4</h2>
+                <p>Örnek yazı 4</p>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/241/800/600" alt="Resim 5">
+            <div class="overlay">
+                <h2>Başlık 5</h2>
+                <p>Örnek yazı 5</p>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/242/800/600" alt="Resim 6">
+            <div class="overlay">
+                <h2>Başlık 6</h2>
+                <p>Örnek yazı 6</p>
+                <button>test</button>
+            </div>
+        </div>
+        <div class="kutu">
+            <img src="https://picsum.photos/id/243/800/600" alt="Resim 7">
+            <div class="overlay">
+                <h2>Başlık 7</h2>
+                <p>Örnek yazı 7</p>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<style>
+            .kutu-parent {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kutu {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      margin-bottom: 20px;
+    }
+
+    .kutu img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .kutu .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 55%;
+      background-color: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(3px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .kutu h2, .kutu p {
+      text-align: center;
+    }
+
+    .kutu h2 {
+      margin-top: 0;
+    }
+
+    .kutu p {
+      margin-bottom: 0;
+    }
+
+</style>*@

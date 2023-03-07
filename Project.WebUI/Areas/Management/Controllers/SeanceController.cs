@@ -22,9 +22,37 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         public IActionResult ListSeances()
         {
+            //SeanceVM svm = new SeanceVM
+            //{
+            //    Seances = _seanceMan.GetAll()
+            //};
+            return View();
+        }
+
+        //-------------------------------------//
+
+        public async Task<IActionResult> ActiveSeancesOfSaloon(int id)
+        {
+            Saloon foundSaloon = await _saloonMan.Find(id);
+            if (foundSaloon == null)
+            {
+                TempData["WrongSaloon"] = "Lütfen geçerli bir salon seçiniz.";
+                return RedirectToAction("ListSaloons", new { id });
+            }
+
+            ICollection<Seance> activeSeances = new List<Seance>();
+            foreach (Seance item in foundSaloon.Seances)
+            {
+                if (item.Status != ENTITIES.Enums.DataStatus.Deleted)
+                {
+                    activeSeances.Add(item);
+                }
+            }
+
             SeanceVM svm = new SeanceVM
             {
-                Seances = _seanceMan.GetAll()
+                Saloon = foundSaloon,
+                Seances = activeSeances
             };
             return View(svm);
         }
@@ -73,6 +101,26 @@ namespace Project.WebUI.Areas.Management.Controllers
         public IActionResult UpdateSeance()
         {
             return View();
+        }
+
+        //-------------------------------------//
+
+        public async Task<IActionResult> DeleteSeance(int id)
+        {
+            Seance foundSeance = await _seanceMan.Find(id);
+            if (foundSeance == null)
+            {
+
+                return RedirectToAction("ActiveSeancesOfSaloon", new { id });
+            }
+
+            _seanceMan.Delete(foundSeance);
+            await _seanceMan.SaveAsync();
+
+            TempData["ProcessCompleted"] = "İlgili seans başarılı bir şekilde kaldırılmıştır.";
+            return RedirectToAction("ActiveSeancesOfSaloon", "Seance", new { foundSeance.Saloon.ID });
+
+            //return RedirectToAction("ActiveSeancesOfSaloon", new { foundSeance.ID });
         }
 
         //-------------------------------------//

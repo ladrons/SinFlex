@@ -1,0 +1,47 @@
+﻿@model TicketVM
+@{
+    ViewData["Title"] = "AddTicket";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddTicket</title>
+</head>
+<body>
+    <div>
+        <div class="titleAndLabel">
+            <h2>Bilet Oluşturma Sayfası</h2>
+            <label>Bu sayfa ile yeni bilet türü oluşturabilirsiniz.</label>
+        </div>
+        <div>
+            <h5 class="successMessage">@TempData["ProcessCompleted"]</h5>
+        </div>
+    </div>
+
+    <div class="container">
+        <form asp-action="AddTicket" method="post">
+            <div class="mb-3">
+                <label class="form-label">Bilet Adı</label>
+                <input type="text" class="form-control" asp-for="TicketDTO.Name" placeholder="Bilet Adı">
+                <span asp-validation-for="TicketDTO.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Bilet Türü</label>
+                <input type="text" class="form-control" asp-for="TicketDTO.Type" placeholder="Bilet Türü">
+                <span asp-validation-for="TicketDTO.Type" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Bilet Fiyatı</label>
+                <input type="text" class="form-control" asp-for="TicketDTO.Price" placeholder="Bilet Fiyatı">
+                <span asp-validation-for="TicketDTO.Price" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Bilet Oluştur</button>
+        </form>
+    </div>
+</body>
+</html>

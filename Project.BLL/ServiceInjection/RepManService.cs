@@ -24,7 +24,9 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddScoped<ISaloonRepository, SaloonRepository>();
             services.AddScoped<ISeanceRepository, SeanceRepository>();
-
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<ISoldTicketRepository, SoldTicketRepository>();
+            services.AddScoped<IBoxOfficeRepository, BoxOfficeRepository>();
             //Manager
             services.AddScoped(typeof(IManager<>), typeof(BaseManager<>));
             services.AddScoped<IAppUserManager, AppUserManager>();
@@ -32,6 +34,9 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<IGenreManager, GenreManager>();
             services.AddScoped<ISaloonManager, SaloonManager>();
             services.AddScoped<ISeanceManager, SeanceManager>();
+            services.AddScoped<ITicketManager, TicketManager>();
+            services.AddScoped<ISoldTicketManager, SoldTicketManager>();
+            services.AddScoped<IBoxOfficeManager, BoxOfficeManager>();
 
             return services;
         }

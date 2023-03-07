@@ -8,6 +8,6 @@ namespace Project.ENTITIES.Enums
 {
     public enum AppUserStatus
     {
-        Admin = 9, CinemaDepartmen = 1, Management = 2,
+        Admin = 9, CinemaDepartmen = 1, Management = 2, BoxOfficeAttendant = 3
     }
 }

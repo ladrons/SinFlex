@@ -65,11 +65,11 @@
                         <div class="mb-2">
                             @if (Model.Saloon.IsOpen == false)
                             {
-                                <a asp-controller="Saloon" asp-action="ActivityStatus" asp-route-id="@Model.Saloon.ID" class="btn btn-success">Salonu Aktif Et</a>
+                                <a asp-controller="Saloon" asp-action="ActivityStatusChange" asp-route-id="@Model.Saloon.ID" class="btn btn-success">Salonu Aktif Et</a>
                             }
                             else
                             {
-                                <a asp-controller="Saloon" asp-action="ActivityStatus" asp-route-id="@Model.Saloon.ID" class="btn btn-danger">Salonu Kapat</a>
+                                <a asp-controller="Saloon" asp-action="ActivityStatusChange" asp-route-id="@Model.Saloon.ID" class="btn btn-danger">Salonu Kapat</a>
                                 <a asp-controller="Saloon" asp-action="UpdateSaloon" asp-route-id="@Model.Saloon.ID" class="btn btn-primary">Salonu Güncelle</a>
                             }
                         </div>
@@ -114,7 +114,7 @@
                                     {
                                         <label>
                                             Aktif seansları görmek için
-                                            <a asp-controller="Seance" asp-action="ListSeances">buraya</a>
+                                            <a asp-controller="Seance" asp-action="ActiveSeancesOfSaloon" asp-route-id="@Model.Saloon.ID">buraya</a>
                                             tıklayın.
                                         </label>
                                     }
@@ -149,7 +149,7 @@
 
                 <div>
                     <div style="text-align:center">
-                        <h4>Seans Listesi</h4>
+
                     </div>
                 </div>
 

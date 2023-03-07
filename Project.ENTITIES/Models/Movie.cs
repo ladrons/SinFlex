@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Project.ENTITIES.Models
@@ -21,7 +22,9 @@ namespace Project.ENTITIES.Models
 
         //Relational Properties
 
+        //[JsonIgnore]
         public virtual Genre Genre { get; set; }
+
 
         public virtual ICollection<Saloon> Saloons { get; set; }
     }

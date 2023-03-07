@@ -1,4 +1,5 @@
-﻿@{
+﻿@model DashboardVM
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
 }
@@ -10,161 +11,95 @@
     <title>SinFlex - Dashboard</title>
 </head>
 <body>
-    <div class="container-xxl" id="">
+    <div class="container-xxl">
+
+        <!--Başlıklar ve uyarılar-->
+        <div style="text-align:center">
+            <h2>SinFlex Dashboard Ekranı</h2>
+            <label>Bu sayfa üzerinden genel kontrol yapılabilir. Gerekli sayfalara ulaşabilirsiniz.</label>
+        </div>
+        <!--Başlıklar ve uyarılar-->
+        <!--Üst menü kutu göstere-->
         <div class="row">
-            <div class="col" id="div-border-line">
-                <div>
-                    <h5 style="text-align:center">Açık Salonlar</h5>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                                <th scope="col">Process</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mdo</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>fat</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>twitter</td>
-                                <td>Button</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col box">
+                <strong>Aktif Film Sayısı</strong>
+                <br />
+                <label>17</label>
             </div>
-            
-            <div class="col-5" id="div-border-line">
-                <h5 style="text-align:center">Vizyon Tarihi Yaklaşan Filmler</h5>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Process</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                            <td>Button</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>fat</td>
-                            <td>Button</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>twitter</td>
-                            <td>Button</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col box">
+                <strong>Kayıtlı Kullanıcı Sayısı</strong>
+                <br />
+                <label>72</label>
+            </div>
+
+            <div class="col box">
+                <strong>Aktif Film Sayısı</strong>
+                <br />
+                <label>17</label>
+            </div>
+
+            <div class="col box">
+                <strong>Kayıtlı Kullanıcı Sayısı</strong>
+                <br />
+                <label>72</label>
             </div>
         </div>
+        <!--Üst menü kutu göstere-->
 
         <div class="row">
-            <div class="col" id="div-border-line">
+            <div>
                 <div>
-                    <h5 style="text-align:center">Açık Salonlar</h5>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                                <th scope="col">Process</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mdo</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>fat</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>twitter</td>
-                                <td>Button</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <a asp-controller="Movie" asp-action="ListMovies" class="btn btn-primary">Film Listesi</a>
+                    <a asp-controller="Movie" asp-action="AddMovie" class="btn btn-primary">Yeni Film Ekle</a>
+                </div>
+                <br />
+                <div>
+                    <a asp-controller="Saloon" asp-action="ListSaloons" class="btn btn-success">Salon Listesi</a>
+                    <a asp-controller="Saloon" asp-action="AddSaloon" class="btn btn-success">Yeni Salon Ekle</a>
                 </div>
             </div>
 
+
             <div class="col" id="div-border-line">
                 <div>
                     <h5 style="text-align:center">Açık Salonlar</h5>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">First</th>
-                                <th scope="col">Last</th>
-                                <th scope="col">Handle</th>
-                                <th scope="col">Process</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>mdo</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>fat</td>
-                                <td>Button</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>twitter</td>
-                                <td>Button</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div id="test">
+                        <table class="table" style="text-align:center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Salon Adı</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Atanmış Film</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Saloons)
+                                {
+                                    <tr>
+                                        <th scope="row">@item.ID</th>
+                                        <td>@item.Name</td>
+                                        @if (item.IsOpen)
+                                        {
+                                            <td><b style="color:green">Açık</b></td>
+                                        }
+                                        else
+                                        {
+                                            <td><b style="color:Red">Kapalı</b></td>
+                                        }
+                                        @if (item.Movie == null)
+                                        {
+                                            <td>Film yok</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@item.Movie.Title</td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -211,9 +146,45 @@
 </body>
 </html>
 
+<script>
+    $("#test table > tbody > tr").hide().slice(0, 10).show();
+    $(".show-all").on("click", function () {
+        $("tbody > tr", $(this).prev()).show();
+    });
+</script>
+
 <style>
-    #div-border-line{
+    #div-border-line {
         border: 1px solid #000000;
         margin: 2px;
     }
+
+    .box {
+        margin: 15px;
+        padding: 0px;
+        border: 1px solid #000000;
+        height: auto;
+        width: 25%;
+        /*background-color: cyan;*/
+        text-align: center;
+    }
+
+        .box strong {
+            font-size: 20px;
+        }
+
+        .box label {
+            font-size: 36px;
+            /*color: red;*/
+        }
 </style>
+
+
+
+
+
+
+
+
+
+

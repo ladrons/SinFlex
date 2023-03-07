@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Project.ENTITIES.Models
@@ -16,6 +17,10 @@ namespace Project.ENTITIES.Models
 
         //Relational Properties
 
+        //[JsonIgnore]
         public virtual Saloon Saloon { get; set; }
+
+
+        public virtual ICollection<SoldTicket> SoldTickets { get; set; }
     }
 }
