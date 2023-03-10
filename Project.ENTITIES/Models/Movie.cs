@@ -27,5 +27,6 @@ namespace Project.ENTITIES.Models
 
 
         public virtual ICollection<Saloon> Saloons { get; set; }
+        public virtual ICollection<MovieFormat> MovieFormats { get; set; }
     }
 }

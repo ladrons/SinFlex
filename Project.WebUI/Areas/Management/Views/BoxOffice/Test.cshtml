@@ -1,0 +1,177 @@
+﻿@{
+    ViewData["Title"] = "Test";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Koltuk Seçimi</title>
+    <style>
+        .container {
+        }
+
+        .center-screen {
+            position: relative;
+            margin: 0 auto;
+            /*width: 600px;*/
+            height: 100px;
+            /*background-color: #f5f5f5;*/
+            /*padding: 20px;*/
+            box-sizing: border-box;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .center-seat {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .seat {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            margin: 5px;
+            text-align: center;
+            line-height: 35px;
+            border: 1px solid black;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer; /* Koltuklara tıklanabilir özellik ekleme */
+        }
+
+            .seat.selected {
+                background-color: green; /* Seçilen koltukların arka plan rengi */
+                color: white; /* Seçilen koltukların yazı rengi */
+            }
+
+            .seat.sold {
+                background-color: red; /* Satılan koltukların arka plan rengi */
+                color: white; /* Satılan koltukların yazı rengi */
+                cursor: not-allowed; /* Satılan koltuklara tıklanamaz özellik ekleme */
+            }
+
+            .seat.reserved {
+                background-color: yellow; /* Rezerve koltukların arka plan rengi */
+                color: white; /* Rezerve koltukların yazı rengi */
+                cursor: not-allowed; /* Rezerve koltuklara tıklanamaz özellik ekleme */
+            }
+
+        .screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 5px;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">AAAA</div>
+            <div class="col">BBBB</div>
+
+        </div>
+
+        <div class="center-screen">
+            <div class="screen">Sinema Perdesi</div>
+        </div>
+        <div class="center-seat">
+            <div id="seats"></div>
+        </div>
+    </div>
+
+    <script>
+        // Koltuk sayısı ve sıra sayısı değişkenleri
+        const numOfSeats = 53;
+        const numOfRows = Math.ceil(numOfSeats / 12);
+
+        // Koltuk harf ve sayıları için dizi
+        const seatAlphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
+
+        // Koltukları temsil eden div'in seçimi
+        const seatsDiv = document.getElementById('seats');
+
+        // Seçilen koltukların sayısını izlemek için sayaç değişkeni
+        let numOfSelectedSeats = 0;
+
+        // Rastgele 4 koltuk belirleyip, sold olarak işaretleme
+        const soldSeats = [];
+        while (soldSeats.length < 4) {
+            const randomSeatIndex = Math.floor(Math.random() * numOfSeats);
+            if (!soldSeats.includes(randomSeatIndex)) {
+                soldSeats.push(randomSeatIndex);
+            }
+        }
+
+        // Koltukları oluşturmak için döngüler
+        for (let row = 0; row < numOfRows; row++) {
+            const seatRowDiv = document.createElement('div');
+            for (let seatNum = 1; seatNum <= 12 && (row * 12 + seatNum) <= numOfSeats; seatNum++) {
+                const seatDiv = document.createElement('div');
+                seatDiv.classList.add('seat');
+                const seatId = `${seatAlphabets[row]}${seatNum}`;
+                seatDiv.setAttribute('id', seatId);
+                seatDiv.innerText = seatId;
+                if (soldSeats.includes(row * 12 + seatNum - 1)) {
+                    // Eğer koltuk satılmışsa arka plan rengini kırmızıya değiştir
+                    seatDiv.classList.add('sold');
+                    seatDiv.style.backgroundColor = 'red';
+                    seatDiv.removeEventListener('click', selectSeat);
+                } else {
+                    // Koltuklara tıklanma olayı ekleme
+                    seatDiv.addEventListener('click', selectSeat);
+                }
+                seatRowDiv.appendChild(seatDiv);
+            }
+            seatsDiv.appendChild(seatRowDiv);
+        }
+
+        // Koltuk seçme işlevi
+        function selectSeat() {
+            const seatDiv = this;
+            if (seatDiv.classList.contains('selected')) {
+                // Eğer seçili olan koltuğa tekrar tıklandıysa, seçimini kaldır
+                seatDiv.classList.remove('selected');
+                numOfSelectedSeats--;
+            } else if (numOfSelectedSeats < 7) {
+                // Seçili koltuk sayısı 7'den az ise, koltuğu seç
+                seatDiv.classList.add('selected');
+                numOfSelectedSeats++;
+            } else {
+                // Seçili koltuk sayısı 7 ise, hata mesajı göster
+                alert('En fazla 7 koltuk seçebilirsiniz!');
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+@*for (let row = 0; row < numOfRows; row++) {
+			const seatRowDiv = document.createElement('div');
+			for (let seatNum = 1; seatNum <= 12 && (row * 12 + seatNum) <= numOfSeats; seatNum++) {
+				const seatDiv = document.createElement('div');
+				seatDiv.classList.add('seat');
+				const seatId = `${seatAlphabets[row]}${seatNum}`;
+				seatDiv.setAttribute('id', seatId);
+				seatDiv.innerText = seatId;
+				seatRowDiv.appendChild(seatDiv);
+			}
+			seatsDiv.appendChild(seatRowDiv);
+		}*@
+
+
+

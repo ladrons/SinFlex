@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.DAL.Repositories.Abstracts
+namespace Project.BLL.ManagerServices.Abstracts
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface IMovieFormatManager : IManager<MovieFormat>
     {
-        Task<bool> CheckSameMovie(Movie movie);
     }
 }

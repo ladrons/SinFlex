@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.DAL.Repositories.Abstracts
+namespace Project.BLL.ManagerServices.Abstracts
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface IFormatManager : IManager<Format>
     {
-        Task<bool> CheckSameMovie(Movie movie);
+
     }
 }

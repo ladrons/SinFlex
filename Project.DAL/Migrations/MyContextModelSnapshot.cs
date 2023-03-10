@@ -43,26 +43,59 @@ namespace Project.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
                     b.ToTable("AppUsers");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.BoxOffice", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BoxOffices");
                 });
 
             modelBuilder.Entity("Project.ENTITIES.Models.Customer", b =>
@@ -92,18 +125,21 @@ namespace Project.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EMail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -154,6 +190,35 @@ namespace Project.DAL.Migrations
                     b.ToTable("CustomerProfiles");
                 });
 
+            modelBuilder.Entity("Project.ENTITIES.Models.Format", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Formats");
+                });
+
             modelBuilder.Entity("Project.ENTITIES.Models.Genre", b =>
                 {
                     b.Property<int>("ID")
@@ -172,6 +237,7 @@ namespace Project.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -191,6 +257,7 @@ namespace Project.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -200,6 +267,7 @@ namespace Project.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Duration")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("GenreID")
@@ -218,6 +286,7 @@ namespace Project.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WhoDeleted")
@@ -228,6 +297,41 @@ namespace Project.DAL.Migrations
                     b.HasIndex("GenreID");
 
                     b.ToTable("Movies");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.MovieFormat", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FormatID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FormatID");
+
+                    b.HasIndex("MovieID");
+
+                    b.ToTable("MovieFormats");
                 });
 
             modelBuilder.Entity("Project.ENTITIES.Models.Saloon", b =>
@@ -247,6 +351,13 @@ namespace Project.DAL.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DimensionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
@@ -254,6 +365,7 @@ namespace Project.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReasonForDelete")
@@ -283,6 +395,108 @@ namespace Project.DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SaloonID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SaloonID");
+
+                    b.ToTable("Seances");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.SoldTicket", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("BoxOfficeID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MovieName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SaloonName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeanceDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SeanceID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SeanceTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeatInfo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BoxOfficeID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.HasIndex("SeanceID");
+
+                    b.HasIndex("TicketID");
+
+                    b.ToTable("SoldTickets");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Ticket", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
@@ -290,17 +504,22 @@ namespace Project.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<string>("Time")
+                    b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Seances");
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("Project.ENTITIES.Models.CustomerProfile", b =>
@@ -325,6 +544,25 @@ namespace Project.DAL.Migrations
                     b.Navigation("Genre");
                 });
 
+            modelBuilder.Entity("Project.ENTITIES.Models.MovieFormat", b =>
+                {
+                    b.HasOne("Project.ENTITIES.Models.Format", "Format")
+                        .WithMany("MovieFormats")
+                        .HasForeignKey("FormatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.ENTITIES.Models.Movie", "Movie")
+                        .WithMany("MovieFormats")
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Format");
+
+                    b.Navigation("Movie");
+                });
+
             modelBuilder.Entity("Project.ENTITIES.Models.Saloon", b =>
                 {
                     b.HasOne("Project.ENTITIES.Models.Movie", "Movie")
@@ -334,10 +572,66 @@ namespace Project.DAL.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("Project.ENTITIES.Models.Seance", b =>
+                {
+                    b.HasOne("Project.ENTITIES.Models.Saloon", "Saloon")
+                        .WithMany("Seances")
+                        .HasForeignKey("SaloonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Saloon");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.SoldTicket", b =>
+                {
+                    b.HasOne("Project.ENTITIES.Models.BoxOffice", "BoxOffice")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("BoxOfficeID");
+
+                    b.HasOne("Project.ENTITIES.Models.Customer", "Customer")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.ENTITIES.Models.Seance", "Seance")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("SeanceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.ENTITIES.Models.Ticket", "Ticket")
+                        .WithMany("SoldTickets")
+                        .HasForeignKey("TicketID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BoxOffice");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Seance");
+
+                    b.Navigation("Ticket");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.BoxOffice", b =>
+                {
+                    b.Navigation("SoldTickets");
+                });
+
             modelBuilder.Entity("Project.ENTITIES.Models.Customer", b =>
                 {
                     b.Navigation("CustomerProfile")
                         .IsRequired();
+
+                    b.Navigation("SoldTickets");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Format", b =>
+                {
+                    b.Navigation("MovieFormats");
                 });
 
             modelBuilder.Entity("Project.ENTITIES.Models.Genre", b =>
@@ -347,7 +641,24 @@ namespace Project.DAL.Migrations
 
             modelBuilder.Entity("Project.ENTITIES.Models.Movie", b =>
                 {
+                    b.Navigation("MovieFormats");
+
                     b.Navigation("Saloons");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Saloon", b =>
+                {
+                    b.Navigation("Seances");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Seance", b =>
+                {
+                    b.Navigation("SoldTickets");
+                });
+
+            modelBuilder.Entity("Project.ENTITIES.Models.Ticket", b =>
+                {
+                    b.Navigation("SoldTickets");
                 });
 #pragma warning restore 612, 618
         }

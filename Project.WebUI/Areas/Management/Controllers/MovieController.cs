@@ -24,7 +24,7 @@ namespace Project.WebUI.Areas.Management.Controllers
         {
             MovieVM mvm = new MovieVM
             {
-                Movies = _movieMan.GetActives(),
+                Movies = _movieMan.GetActives()
             };
             //ViewBag.UserInfo = (HttpContext.Session.GetObject<AppUser>("user").Username);
             return View(mvm);
@@ -34,9 +34,10 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         public IActionResult AddMovie()
         {
+
             MovieVM mvm = new MovieVM
             {
-                Genres = _genreMan.GetActives()
+                Genres = _genreMan.GetActives(),
             };
             return View(mvm);
         }

@@ -24,6 +24,11 @@ namespace Project.DAL.Context
             modelBuilder.ApplyConfiguration(new MovieConfiguration());
             modelBuilder.ApplyConfiguration(new SaloonConfiguration());
             modelBuilder.ApplyConfiguration(new SeanceConfiguration());
+            modelBuilder.ApplyConfiguration(new TicketConfiguration());
+            modelBuilder.ApplyConfiguration(new SoldTicketConfiguration());
+            modelBuilder.ApplyConfiguration(new BoxOfficeConfiguration());
+            modelBuilder.ApplyConfiguration(new FormatConfiguration());
+            modelBuilder.ApplyConfiguration(new MovieFormatConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -34,5 +39,10 @@ namespace Project.DAL.Context
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Saloon> Saloons { get; set; }
         public DbSet<Seance> Seances { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<SoldTicket> SoldTickets { get; set; }
+        public DbSet<BoxOffice> BoxOffices { get; set; }
+        public DbSet<Format> Formats { get; set; }
+        public DbSet<MovieFormat> MovieFormats { get; set; }
     }
 }

@@ -10,13 +10,14 @@ namespace Project.WebUI.Areas.Management.Controllers
     [Area("Management")]
     public class BoxOfficeController : Controller
     {
-        IBoxOfficeManager _boxOfficeMan; IMovieManager _movieMan; ISeanceManager _seanceMan;
+        IBoxOfficeManager _boxOfficeMan; IMovieManager _movieMan; ISeanceManager _seanceMan; ISaloonManager _saloonMan;
 
-        public BoxOfficeController(IBoxOfficeManager boxOfficeMan, IMovieManager movieMan, ISeanceManager seanceMan)
+        public BoxOfficeController(IBoxOfficeManager boxOfficeMan, IMovieManager movieMan, ISeanceManager seanceMan, ISaloonManager saloonMan)
         {
             _boxOfficeMan = boxOfficeMan;
             _movieMan = movieMan;
             _seanceMan = seanceMan;
+            _saloonMan = saloonMan;
         }
 
         //-------------------------------------//
@@ -33,11 +34,25 @@ namespace Project.WebUI.Areas.Management.Controllers
 
         //-------------------------------------//
 
-        public IActionResult TicketSales()
+        [HttpPost]
+        public async Task<IActionResult> Test(int id)
         {
-            //İlk olarak hangi filme bilet alınacak bunun seçilmesi gerek. O yüzden aktif olan ve herhangi bir salonda gösterimde olan filmlerin listelenmesi gerek.
+            //Burada koltuk ve bilet seçim işlemleri yapılacaktır. Action'a gelen 'id' parametresi ise 'SoldTicket'ı temsil etmektedir. Bu id ile ilgili bilgiye db'den ulaşarak kendisine koltuk, bilet vb bilgileri ekleyerek güncelleyeceğiz.
 
 
+
+
+
+            // Burada gelen veriler kullanılabilir.
+            // ...
+            return View();
+        }
+
+        //-------------------------------------//
+
+        public IActionResult BringActiveMovies()
+        {
+            //ToDo: Bu methodun sadece bir salona atanmış olan ve status durumu 'DELETED' OLMAYAN filmleri getirmesi gerek.
             BoxOfficeVM bovm = new BoxOfficeVM
             {
                 //Movies = _movieMan.Where(x => x.Saloons.Count != 0 && x.Status != ENTITIES.Enums.DataStatus.Deleted).AsQueryable()
@@ -46,27 +61,48 @@ namespace Project.WebUI.Areas.Management.Controllers
             return View(bovm);
         }
 
-        //-------------------------------------//
-
-        [HttpGet]
-        public async Task<List<string>> BringSeanceTimes(int id)
+        [HttpPost]
+        public async Task<IActionResult> BringActiveMovies([FromBody] SeanceInfoDTO seanceInfoDTO)
         {
-            Seance foundSeance = await _seanceMan.Find(id); //Gelen id ile db'de ilgili seansı buluyoruz.
+            Movie foundMovie = await _movieMan.Find(seanceInfoDTO.ID); //İlgili filmi buluyoruz.
 
-            //Db'de bulunan aynı tarihte ve aynı salonID içeren bütün seansları bu listede toplayacağız.
-            //List<Seance> seances = new List<Seance>();
+            if (foundMovie == null)
+                return NotFound(); //ToDo: Hata sayfası düzenlenecek.
 
-            List<Seance> seances = _seanceMan.Where(x => x.Date == foundSeance.Date && x.SaloonID == foundSeance.SaloonID).ToList();
-
-            //Bulduğumuz seanslardaki saat bilgilerini bu listede toplayacağız.
-            List<string> times = new List<string>();
-            foreach (Seance item in seances)
+            if (foundMovie.Saloons.Count > 0)
             {
-                times.Add(item.Time);
+                //Eğer film birden fazla salonda gösterimde ise burası çalışacak.
             }
-            return times;
+            else
+            {
+                Saloon foundSaloon = foundMovie.Saloons.First(); //Filmin oynadığı salonu tespit ettik.
+
+                //Saloon ID, Tarih ve Saat bilgileri action'a gelen parametre ile aynı olan veriyi bulmamız gerek.
+                DateTime seanceDate = Convert.ToDateTime(seanceInfoDTO.Date);
+
+                Seance foundSeance = await _seanceMan.FirstOrDefault(x => x.SaloonID == seanceInfoDTO.ID && x.Date == seanceDate && x.Time == seanceInfoDTO.Time);
+
+                
+            }
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+            SoldTicket newSoldTicket = new SoldTicket();
+            return RedirectToAction("Test", newSoldTicket);
         }
 
+        //-------------------------------------//
 
         [HttpGet]
         public async Task<List<SeanceInfoDTO>> BringSeanceDates(int id)
@@ -109,6 +145,27 @@ namespace Project.WebUI.Areas.Management.Controllers
             }
             return seanceInfoDTOs;
         }
+        //------------//
+        [HttpGet]
+        public async Task<List<string>> BringSeanceTimes(int id)
+        {
+            Seance foundSeance = await _seanceMan.Find(id); //Gelen id ile db'de ilgili seansı buluyoruz.
+
+            //Db'de bulunan aynı tarihte ve aynı salonID içeren bütün seansları bu listede toplayacağız.
+            //List<Seance> seances = new List<Seance>();
+
+            List<Seance> seances = _seanceMan.Where(x => x.Date == foundSeance.Date && x.SaloonID == foundSeance.SaloonID).ToList();
+
+            //Bulduğumuz seanslardaki saat bilgilerini bu listede toplayacağız.
+            List<string> times = new List<string>();
+            foreach (Seance item in seances)
+            {
+                times.Add(item.Time);
+            }
+            return times;
+        }
+
+        //-------------------------------------//
     }
 }
 

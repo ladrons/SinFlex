@@ -3,16 +3,28 @@
     public class SeanceInfoDTO
     {
         public int ID { get; set; }
-        public string SaloonName { get; set; } //Salon adı
-        public string MovieName { get; set; } //Filmin adı
-        public string Date { get; set; } //Seans tarihi
-        public List<string> Times { get; set; } //Seans saatleri
-
-
-        //public string Time { get; set; } //Seans saati
-
-
-        //public List<string> Dates { get; set; }
-        //public List<string> Times { get; set; }
+        public string MovieName { get; set; }
+        public string Date { get; set; }
+        public string Time { get; set; }
     }
 }
+
+
+
+
+
+
+
+
+/*
+NOTLAR;
+    1. Filmin hem ID bilgisin hemde isim bilgisini alıyorum. ID bilgisi üzerinden zaten adına ulaşabilirim. İsim bilgisi gereksiz.
+    2. 
+
+
+
+
+    - MovieName kaldırılacak.
+ 
+ 
+*/

@@ -1,0 +1,188 @@
+﻿@model BoxOfficeVM
+@{
+    ViewData["Title"] = "BringActiveMovies";
+    Layout = "~/Areas/Management/Views/Shared/_Layout.cshtml";
+}
+
+<div style="text-align:center">
+    <h2>Bilet Satış Ekranı</h2>
+    <hr />
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div>
+                <h4>Lütfen bir film seçiniz.</h4>
+                <div class="list-group">
+                    @foreach (var item in Model.Movies)
+                    {
+                        @*<a id="@item.ID" class="getDates list-group-item list-group-item-action">@item.Title 1</a>*@
+                        <input type='button' id="@item.ID" class='getDates list-group-item list-group-item-action' value="@item.Title" />
+                    }
+                </div>
+            </div>
+            <hr />
+            <div>
+                <h4>Lütfen bir tarih seçiniz.</h4>
+                <div class="list-group" id="dateList"></div>
+            </div>
+            <hr />
+            <div>
+                <h4>Lütfen bir saat seçiniz.</h4>
+                <div class="list-group" id="timeList"></div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="d-flex flex-column align-items-center">
+                <h4>Seçili Seans Bilgileri</h4>
+                <div class="mb-2">
+                    <b class="form-label">Seçilen Film:</b>
+                    <label class="movieLabel form-label"></label>
+                </div>
+                <div class="mb-2">
+                    <b class="form-label">Seçilen Tarih:</b>
+                    <label class="dateLabel form-label"></label>
+                </div>
+                <div class="mb-2">
+                    <b class="form-label">Seçilen Saat:</b>
+                    <label class="timeLabel form-label"></label>
+
+                    <label class="idLabel form-label" Style="display:none"></label>
+                </div>
+                
+                <div class="mb-2">
+                    <button id="processContinue" class="btn btn-success" type="submit">İşleme Devam Et</button>
+                    <button id="processContinue" class="btn btn-warning" type="submit">İşlemi Sıfırla</button>
+                    <button id="processContinue" class="btn btn-danger" type="submit">İşleme İptal Et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Script alanı. (BURADAKİ SCRIPTLER DAHA SONRA AYRI BİR DOSYAYA TAŞINACAKTIR)*@
+
+<script>
+    $(document).on('click', '.getDates', function () {
+        clearDateLabel(); clearTimeLabel();
+
+        $('.movieLabel').html($(this).val());
+        $('.idLabel').html($(this).attr('id'));
+
+        var myId = $(this).attr('id');
+
+        $.ajax({
+            url: 'https://localhost:44374/Management/BoxOffice/BringSeanceDates',
+            data: { id: myId },
+            type: 'Get',
+            success: function (data) {
+                AddDates(data);
+            }
+        })
+    })
+
+    function AddDates(dataList) {
+        if ($("#dateList").children().length > 0) {
+
+            $("#dateList").empty();
+            $('#timeList').empty();
+
+            $.each(dataList, function (key, data) {
+                $("#dateList").append("<input type='button' id=" + data.id + " class='getTimes list-group-item list-group-item-action' value=" + data.date + " />");
+            })
+
+            console.log("if bloğu çalıştı") //Test içindir.
+        }
+        else {
+            $.each(dataList, function (key, data) {
+                $("#dateList").append("<input type='button' id=" + data.id + " class='getTimes list-group-item list-group-item-action' value=" + data.date + " />");
+            })
+
+            console.log("else bloğu çalıştı") //Test içindir.
+        }
+    }
+
+    //-------------------------------//
+
+    $(document).on('click', '.getTimes', function () {
+        clearTimeLabel();
+
+        $('.dateLabel').html($(this).val());
+
+        var myId = $(this).attr("id");
+
+        $.ajax({
+            url: 'https://localhost:44374/Management/BoxOffice/BringSeanceTimes',
+            data: { id: myId },
+            type: 'GET',
+            success: function (data) {
+                AddTimes(data);
+            }
+        });
+    });
+
+    function AddTimes(dataList) {
+        if ($("#timeList").children().length > 0) {
+            $("#timeList").empty();
+            $.each(dataList, function (key, data) {
+                $("#timeList").append("<input type='button' id='#' class='selectTime list-group-item list-group-item-action' value=" + data + " />");
+            })
+
+            console.log("if bloğu çalıştı") //Test içindir.
+        }
+        else {
+            $.each(dataList, function (key, data) {
+                $("#timeList").append("<input type='button' id='#' class='selectTime list-group-item list-group-item-action' value=" + data + " />");
+            })
+
+            console.log("else bloğu çalıştı") //Test içindir.
+        }
+    }
+
+    //-------------------------------//
+
+    $(document).on('click', '.selectTime', function () {
+        $('.timeLabel').html($(this).val());
+    })
+
+    //-------------------------------//
+
+    function clearDateLabel() {
+        if ($('.dateLabel').text().length > 0) {
+            $('.dateLabel').text("");
+        }
+
+    }
+    function clearTimeLabel() {
+        if ($('.timeLabel').text().length > 0) {
+            $('.timeLabel').text("");
+        }
+    }
+
+    //-------------------------------//
+
+    $(document).on('click', '#processContinue', function () {
+
+        var SeanceInfoDTO = {
+            MovieName: $('.movieLabel').text(),
+            Date: $('.dateLabel').text(),
+            Time: $('.timeLabel').text(),
+            ID: $('.idLabel').text(),
+        };
+
+        $.ajax({
+            url: 'https://localhost:44374/Management/BoxOffice/BringActiveMovies',
+            type: 'Post',
+            contentType: 'application/json',
+            data: JSON.stringify(SeanceInfoDTO),
+            error: function (xhr, status, error) {
+                console.log("AJAX'In error fonksiyonu çalıştı.");
+            }
+        });
+    });
+
+</script>
+
+@*Script alanı. (BURADAKİ SCRIPTLER DAHA SONRA AYRI BİR DOSYAYA TAŞINACAKTIR)*@

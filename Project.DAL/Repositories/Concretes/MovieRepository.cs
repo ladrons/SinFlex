@@ -25,17 +25,17 @@ namespace Project.DAL.Repositories.Concretes
         /// <param name="movieDTO">Db'de kontrol edilecek film</param>
         /// <returns>Eğer 'True' değer dönerse girilen bilgilere eş değer veri yoktur. 'False' değer dönerse girilen bilgilere eş değer vardır.</returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<bool> CheckSameMovie(MovieDTO movieDTO)
+        public async Task<bool> CheckSameMovie(Movie movie)
         {
-            if (movieDTO == null)
-                throw new ArgumentNullException(nameof(movieDTO));
+            if (movie == null)
+                throw new ArgumentNullException(nameof(movie));
 
-            Movie? checkMovie = await _db.Movies.FirstOrDefaultAsync(x => x.Title == movieDTO.Title && x.Duration == movieDTO.Duration);
-
-            if (checkMovie == null)
-                return true; //Aynı isim ve süre de film yok.
-
-            return false; //Aynı isim ve süre de film var.
+            Movie foundMovie = await _db.Movies.FirstOrDefaultAsync(x => x.Title == movie.Title && x.Content == movie.Content);
+            if (foundMovie == null)
+            {
+                return true;
+            }
+            else { return false; }
         }
     }
 }

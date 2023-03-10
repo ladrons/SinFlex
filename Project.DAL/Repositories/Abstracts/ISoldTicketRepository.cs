@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Project.DAL.Repositories.Abstracts
 {
-    public interface IMovieRepository : IRepository<Movie>
+    public interface ISoldTicketRepository : IRepository<SoldTicket>
     {
-        Task<bool> CheckSameMovie(Movie movie);
+
     }
 }

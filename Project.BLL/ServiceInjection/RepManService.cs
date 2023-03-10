@@ -27,6 +27,8 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<ISoldTicketRepository, SoldTicketRepository>();
             services.AddScoped<IBoxOfficeRepository, BoxOfficeRepository>();
+            services.AddScoped<IFormatRepository, FormatRepository>();
+            services.AddScoped<IMovieFormatRepository, MovieFormatRepository>();
             //Manager
             services.AddScoped(typeof(IManager<>), typeof(BaseManager<>));
             services.AddScoped<IAppUserManager, AppUserManager>();
@@ -37,6 +39,8 @@ namespace Project.BLL.ServiceInjection
             services.AddScoped<ITicketManager, TicketManager>();
             services.AddScoped<ISoldTicketManager, SoldTicketManager>();
             services.AddScoped<IBoxOfficeManager, BoxOfficeManager>();
+            services.AddScoped<IFormatManager, FormatManager>();
+            services.AddScoped<IMovieFormatManager, MovieFormatManager>();
 
             return services;
         }
